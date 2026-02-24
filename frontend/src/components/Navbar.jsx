@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 const LINKS = [
-  { to: '/',               label: 'Home'           },
-  { to: '/about',          label: 'About'          },
-  { to: '/portfolio',      label: 'Portfolio'      },
-  { to: '/resume',         label: 'Resume'         },
+  { to: '/',            label: 'Home'           },
+  { to: '/about',       label: 'About'          },
+  { to: '/portfolio',   label: 'Portfolio'      },
+  { to: '/resume',      label: 'Resume'         },
   { to: '/certifications', label: 'Certifications' },
-  { to: '/contact',        label: 'Contact'        },
+  { to: '/contact',     label: 'Contact'        },
 ];
 
 export default function Navbar() {
@@ -48,14 +48,24 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA */}
-          <a
-            href="https://github.com/ShahJahanBrohii"
-            target="_blank" rel="noreferrer"
-            className="btn btn-amber nav__cta hide-sm"
-          >
-            GitHub ↗
-          </a>
+          {/* Social CTAs */}
+          <div className="nav__actions hide-sm" style={{ display: 'flex', gap: '10px' }}>
+            <a
+              href="https://github.com/ShahJahanBrohii"
+              target="_blank" rel="noreferrer"
+              className="btn btn-amber nav__cta"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href="https://www.linkedin.com/in/shah-jahan-abdul-latif-a00a74280"
+              target="_blank" rel="noreferrer"
+              className="btn btn-blue nav__cta" 
+              style={{ backgroundColor: '#0077b5', color: 'white' }}
+            >
+              LinkedIn ↗
+            </a>
+          </div>
 
           {/* Hamburger */}
           <button
@@ -81,15 +91,26 @@ export default function Navbar() {
             {label}
           </NavLink>
         ))}
-        <a
-          href="https://github.com/ShahJahanBrohii"
-          target="_blank" rel="noreferrer"
-          className="btn btn-amber"
-          style={{ marginTop: '16px' }}
-          onClick={() => setOpen(false)}
-        >
-          GitHub ↗
-        </a>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+            <a
+              href="https://github.com/ShahJahanBrohii"
+              target="_blank" rel="noreferrer"
+              className="btn btn-amber"
+              onClick={() => setOpen(false)}
+            >
+              GitHub ↗
+            </a>
+            <a
+              href="https://www.linkedin.com/in/shah-jahan-abdul-latif-a00a74280"
+              target="_blank" rel="noreferrer"
+              className="btn"
+              style={{ backgroundColor: '#0077b5', color: 'white', textAlign: 'center' }}
+              onClick={() => setOpen(false)}
+            >
+              LinkedIn ↗
+            </a>
+        </div>
       </div>
       {open && <div className="nav__overlay" onClick={() => setOpen(false)} />}
     </>
