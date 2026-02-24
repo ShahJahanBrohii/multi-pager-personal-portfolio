@@ -1,0 +1,75 @@
+.pcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.pcard__stripe {
+  height: 2px;
+  flex-shrink: 0;
+}
+
+.pcard__body {
+  padding: 18px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.pcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pcard__tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.pcard__actions { display: flex; gap: 5px; }
+
+.pcard__icon {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--wire);
+  color: var(--text2);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.pcard__icon:hover {
+  color: var(--amber);
+  border-color: var(--wire2);
+  background: var(--amber-glow);
+}
+
+.pcard__title {
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.pcard__desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.8;
+  flex: 1;
+}
+
+.pcard__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+/* featured variant — slightly more padding */
+.pcard--featured .pcard__body { padding: 22px 24px 26px; }
+.pcard--featured .pcard__title { font-size: 18px; }
