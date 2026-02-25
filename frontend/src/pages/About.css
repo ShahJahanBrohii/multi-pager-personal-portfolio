@@ -1,0 +1,189 @@
+.about-hero { padding-bottom: 0; }
+
+/* ── BIO + PHILO GRID ───────────────────────────────────── */
+.about-main__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Avatar */
+.about-avatar {
+  position: relative;
+  width: 84px; height: 84px;
+  margin-bottom: 20px;
+}
+.about-avatar__ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--amber);
+  opacity: 0.45;
+  animation: spinSlow 9s linear infinite;
+  /* rotating dashed effect */
+  background: conic-gradient(var(--amber) 80deg, transparent 80deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+}
+.about-avatar__inner {
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  background: var(--ink3);
+  border: 1px solid var(--wire2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head);
+  font-size: 20px; font-weight: 700;
+  color: var(--amber);
+}
+
+.about-name {
+  font-size: 26px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.about-role {
+  font-size: 12px;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.88;
+  margin-bottom: 26px;
+}
+.about-body strong { color: var(--text); font-weight: 500; }
+
+.about-meta {
+  background: var(--ink3);
+  border: 1px solid var(--wire);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.about-meta__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--wire);
+  font-size: 12px;
+}
+.about-meta__row:last-child { border-bottom: none; }
+.about-meta__key {
+  min-width: 88px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text2);
+}
+.about-meta__val { color: var(--text); }
+
+/* Philosophy cards */
+.about-philo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.philo-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+}
+.philo-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.philo-title {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.philo-body { font-size: 12px; color: var(--text2); line-height: 1.7; }
+
+/* ── MARQUEE ──────────────────────────────────────────────── */
+.about-marquee {
+  border-top: 1px solid var(--wire);
+  border-bottom: 1px solid var(--wire);
+  background: var(--ink2);
+  padding: 24px 0;
+  overflow: hidden;
+}
+.about-marquee__track {
+  overflow: hidden;
+  position: relative;
+}
+.about-marquee__track::before,
+.about-marquee__track::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+}
+.about-marquee__track::before { left: 0; background: linear-gradient(to right, var(--ink2), transparent); }
+.about-marquee__track::after  { right: 0; background: linear-gradient(to left, var(--ink2), transparent); }
+.about-marquee__inner {
+  display: flex;
+  width: max-content;
+  animation: marqLeft 26s linear infinite;
+}
+
+/* ── TIMELINE ─────────────────────────────────────────────── */
+.timeline { position: relative; padding-bottom: 10px; }
+
+.timeline__spine {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, var(--amber), var(--teal), transparent);
+  opacity: 0.25;
+}
+
+.tl-item {
+  display: flex;
+  width: 50%;
+  margin-bottom: 36px;
+  position: relative;
+}
+.tl-item--left  { padding-right: 46px; justify-content: flex-end; }
+.tl-item--right { padding-left: 46px; margin-left: 50%; justify-content: flex-start; }
+
+.tl-dot {
+  position: absolute;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  top: 18px;
+  z-index: 1;
+}
+.tl-item--left  .tl-dot { right: -7px; }
+.tl-item--right .tl-dot { left: -7px; }
+
+.tl-card { padding: 16px 18px; max-width: 360px; width: 100%; }
+.tl-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tl-year {
+  font-family: var(--font-head);
+  font-size: 20px; font-weight: 700;
+  line-height: 1;
+}
+.tl-title { font-size: 14px; color: var(--text); margin-bottom: 5px; }
+.tl-body  { font-size: 12px; color: var(--text2); line-height: 1.8; }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .about-main__grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .timeline__spine { left: 16px; }
+  .tl-item { width: 100%; margin-left: 0 !important; padding: 0 0 0 40px !important; justify-content: flex-start !important; }
+  .tl-dot  { left: 9px !important; right: auto !important; }
+}
