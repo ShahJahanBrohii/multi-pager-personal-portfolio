@@ -1,0 +1,53 @@
+.port-hero { padding-bottom: 40px; }
+
+.port-counts {
+  display: flex;
+  gap: 32px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.port-count {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Filter bar */
+.port-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.port-filter__btns { display: flex; gap: 6px; }
+.port-filter__btn {
+  padding: 7px 18px;
+  border-radius: 7px;
+  border: 1px solid var(--wire);
+  background: var(--ink2);
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.port-filter__btn:hover { color: var(--text); border-color: var(--wire2); background: var(--ink3); }
+.port-filter__btn.active {
+  background: var(--amber-dim) !important;
+  border-color: var(--amber) !important;
+  color: var(--amber) !important;
+}
+.port-showing { font-size: 12px; color: var(--text2); }
+.port-showing strong { color: var(--text); }
+
+/* Grid */
+.port-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) { .port-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .port-grid { grid-template-columns: 1fr; } }
