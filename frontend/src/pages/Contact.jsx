@@ -16,7 +16,7 @@ function validate({ name, email, subject, message }) {
 const INFO = [
   {
     label: 'Email',
-    value: 'shahjahanbrohii@gmail.com',
+    value: 'shahjahan.bscsf22@iba-suk.edu.pk',
     href: 'mailto:shahjahanbrohii@gmail.com',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -26,7 +26,7 @@ const INFO = [
   },
   {
     label: 'GitHub',
-    value: '@ShahJahanBrohii',
+    value: 'Shah Jahan',
     href: 'https://github.com/ShahJahanBrohii',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -46,7 +46,7 @@ const INFO = [
   },
   {
     label: 'Location',
-    value: 'Nawabshah, Sindh, PK',
+    value: 'Sukkur, Sindh, PK',
     href: null,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

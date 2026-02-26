@@ -28,7 +28,7 @@ export default function About() {
               <div className="about-avatar__inner">SJB</div>
             </div>
 
-            <h2 className="about-name">Shah Jahan Brohii</h2>
+            <h2 className="about-name">Shah Jahan </h2>
             <p className="about-role">Backend Developer & ML Enthusiast</p>
 
             <div className="about-body">

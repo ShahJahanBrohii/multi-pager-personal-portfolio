@@ -29,7 +29,7 @@ export default function Navbar() {
           {/* Logo */}
           <NavLink to="/" className="nav__logo">
             <span className="nav__logo-bracket">[</span>
-            SJ<span className="nav__logo-dot">.</span>Brohii
+            Shah<span className="nav__logo-dot">.</span>Jahan
             <span className="nav__logo-bracket">]</span>
           </NavLink>
 

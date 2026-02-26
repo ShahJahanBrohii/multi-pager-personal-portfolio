@@ -61,7 +61,6 @@ export default function Home() {
           {/* name */}
           <h1 className="hero__name fu d2">
             Shah Jahan<br />
-            <em>Brohii</em>
           </h1>
 
           {/* typewriter */}

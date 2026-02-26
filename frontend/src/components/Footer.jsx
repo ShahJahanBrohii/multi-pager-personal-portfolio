@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="footer__brand">
           <p className="footer__logo">
             <span style={{ color: 'var(--amber)' }}>[</span>
-            SJ.Brohii
+            Shah.Jahan
             <span style={{ color: 'var(--amber)' }}>]</span>
           </p>
           <p className="footer__tagline">Backend Developer & ML Enthusiast</p>

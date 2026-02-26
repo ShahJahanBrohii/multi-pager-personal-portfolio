@@ -16,7 +16,7 @@
 }
 .about-avatar__ring {
   position: absolute;
-  inset: -5px;
+  inset: -2px;
   border-radius: 50%;
   border: 1.5px solid var(--amber);
   opacity: 0.45;
