@@ -123,7 +123,19 @@ export const TIMELINE = [
 
 /* ─── CERTIFICATIONS ────────────────────────────────────────── */
 export const CERTS = [
-  { title: 'Internship Certificate',     issuer: 'Your Company', year: '2024', color: '#F5A623', tag: 'Internship', image: '/src/images/internship.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'Internship', image: '/src/images/certificates/internship.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'data science webinar', image: '/src/images/certificates/data_Webinar.png' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'hackathon', image: '/src/images/certificates/hackathon.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'power bi webinar', image: '/src/images/certificates/powerbi_Webinar.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'project expo', image: '/src/images/certificates/project_expo.png' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'sibafest volunteer', image: '/src/images/certificates/sibafest_volunteer.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'Tableau Training', image: '/src/images/certificates/Tableau_Training.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'wordpress workshop', image: '/src/images/certificates/wordpress_workshop.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'advanced writing', image: '/src/images/certificates/Advanced_Writing.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'buisness writing', image: '/src/images/certificates/Buisness_Wrting.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'creative writing', image: '/src/images/certificates/Creative_Writing.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'essay writing', image: '/src/images/certificates/Essay_Writing.jpg' },
+  { title: 'Internship Certificate',     issuer: 'High Tech Software House and Training Center', year: '2025', color: '#F5A623', tag: 'grammar and punctuation', image: '/src/images/certificates/Grammar_Punctuataion.jpg' },
 ];
 
 /* ─── RESUME ────────────────────────────────────────────────── */
