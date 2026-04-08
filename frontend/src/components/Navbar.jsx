@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const LINKS = [
@@ -49,7 +50,8 @@ export default function Navbar() {
           </ul>
 
           {/* Social CTAs */}
-          <div className="nav__actions hide-sm" style={{ display: 'flex', gap: '10px' }}>
+          <div className="nav__actions hide-sm" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <ThemeToggle />
             <a
               href="https://github.com/ShahJahanBrohii"
               target="_blank" rel="noreferrer"

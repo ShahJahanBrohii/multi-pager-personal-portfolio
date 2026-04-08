@@ -117,7 +117,7 @@ export default function Home() {
         </div>
       </div>
 
-      ══ FEATURED PROJECTS ═════════════════════════════════
+      {/* ══ FEATURED PROJECTS ════════════════════════════════════ */}
       <section className="section home-projects">
         <div className="container">
           <div className="home-projects__hd">

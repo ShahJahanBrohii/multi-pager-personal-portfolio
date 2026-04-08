@@ -1,40 +1,62 @@
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
-
-/* Clash Display via CDN */
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
 
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root {
-  --ink:         #0C0C0E;
-  --ink2:        #111115;
-  --ink3:        #18181F;
-  --ink4:        #202028;
-  --ink5:        #2A2A35;
+  --ink:         #0A0E27;
+  --ink2:        #0F1535;
+  --ink3:        #131D42;
+  --ink4:        #1A2555;
+  --ink5:        #212E6B;
 
-  --wire:        rgba(255,255,255,0.06);
-  --wire2:       rgba(245,166,35,0.25);
+  --wire:        rgba(0,217,255,0.08);
+  --wire2:       rgba(0,217,255,0.25);
 
-  --text:        #E8E5DC;
-  --text2:       #9A9585;
-  --text3:       #4A4840;
+  --text:        #F0F4FF;
+  --text2:       #B4BFFF;
+  --text3:       #7A8FFF;
 
-  --amber:       #F5A623;
-  --amber2:      #E8941A;
-  --amber-dim:   rgba(245,166,35,0.12);
-  --amber-glow:  rgba(245,166,35,0.08);
+  --amber:       #00D9FF;
+  --amber2:      #00A8CC;
+  --amber-dim:   rgba(0,217,255,0.12);
+  --amber-glow:  rgba(0,217,255,0.08);
 
-  --teal:        #4DD9C0;
-  --rose:        #F56E6E;
-  --violet:      #9B7FFF;
+  --teal:        #7C3AED;
+  --rose:        #EC4899;
+  --violet:      #A78BFA;
 
-  --font-head:   'Clash Display', sans-serif;
-  --font-body:   'IBM Plex Mono', monospace;
+  --font-head:   'Geist', sans-serif;
+  --font-body:   'Geist Mono', monospace;
 
   --nav-h:       60px;
   --r:           8px;
   --r-lg:        14px;
   --max-w:       1140px;
+}
+
+/* ── LIGHT MODE ─────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  --ink:         #FFFFFF;
+  --ink2:        #F7F9FC;
+  --ink3:        #E8F0FB;
+  --ink4:        #D9E7F8;
+  --ink5:        #C5D9F0;
+
+  --wire:        rgba(0,102,204,0.08);
+  --wire2:       rgba(0,102,204,0.25);
+
+  --text:        #0F1729;
+  --text2:       #3D5A80;
+  --text3:       #7A92B5;
+
+  --amber:       #0066CC;
+  --amber2:      #0052A3;
+  --amber-dim:   rgba(0,102,204,0.12);
+  --amber-glow:  rgba(0,102,204,0.08);
+
+  --teal:        #7C3AED;
+  --rose:        #D81B60;
+  --violet:      #A78BFA;
 }
 
 /* ── RESET ──────────────────────────────────────────────────── */

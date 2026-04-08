@@ -34,6 +34,23 @@
   border: 1px solid;
 }
 
+.pcard__tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pcard__difficulty {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: capitalize;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
 .pcard__actions { display: flex; gap: 5px; }
 
 .pcard__icon {

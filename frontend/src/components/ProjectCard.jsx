@@ -1,7 +1,13 @@
 import './ProjectCard.css';
 
+const DIFFICULTY_COLORS = {
+  Easy: '#4DD9C0',
+  Medium: '#F5A623',
+  Hard: '#F56E6E',
+};
+
 export default function ProjectCard({ project, featured = false }) {
-  const { title, desc, tag, tech, github, archLink, accent } = project;
+  const { title, desc, tag, tech, github, archLink, accent, difficulty } = project;
   return (
     <article className={`pcard card${featured ? ' pcard--featured' : ''}`}>
       {/* coloured top stripe */}
@@ -10,12 +16,22 @@ export default function ProjectCard({ project, featured = false }) {
       <div className="pcard__body">
         {/* header row */}
         <div className="pcard__head">
-          <span
-            className="pcard__tag"
-            style={{ color: accent, borderColor: `${accent}40`, background: `${accent}12` }}
-          >
-            {tag}
-          </span>
+          <div className="pcard__tags">
+            <span
+              className="pcard__tag"
+              style={{ color: accent, borderColor: `${accent}40`, background: `${accent}12` }}
+            >
+              {tag}
+            </span>
+            {difficulty && (
+              <span
+                className="pcard__difficulty"
+                style={{ color: DIFFICULTY_COLORS[difficulty], borderColor: `${DIFFICULTY_COLORS[difficulty]}40`, background: `${DIFFICULTY_COLORS[difficulty]}12` }}
+              >
+                {difficulty}
+              </span>
+            )}
+          </div>
           <div className="pcard__actions">
             {archLink && (
               <a href={archLink} className="pcard__icon" title="Architecture diagram" aria-label="Architecture">

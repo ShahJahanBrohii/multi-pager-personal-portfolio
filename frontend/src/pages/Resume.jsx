@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { SKILLS, RESUME } from '../assets/data';
+import { SKILLS, RESUME, TIMELINE } from '../assets/data';
 import './Resume.css';
 
 /* Animated progress bar — triggers on scroll intersection */
@@ -24,7 +24,7 @@ function SkillBar({ name, level }) {
   );
 }
 
-const TABS = ['Skills', 'Experience', 'Education'];
+const TABS = ['Skills', 'Experience', 'Education', 'Timeline'];
 
 export default function Resume() {
   const [tab, setTab] = useState('Skills');
@@ -131,6 +131,27 @@ export default function Resume() {
                   </ul>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* ─ Timeline panel ─ */}
+          {tab === 'Timeline' && (
+            <div className="res-panel fi">
+              <div className="timeline">
+                {TIMELINE.map((item, i) => (
+                  <div key={i} className="timeline__item">
+                    <div className="timeline__marker" style={{ backgroundColor: item.color }} />
+                    <div className="timeline__content card">
+                      <div className="timeline__header">
+                        <span className="timeline__year" style={{ color: item.color }}>{item.year}</span>
+                        <span className="timeline__tag" style={{ borderColor: item.color, color: item.color }}>{item.tag}</span>
+                      </div>
+                      <h3 className="timeline__title">{item.title}</h3>
+                      <p className="timeline__body">{item.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

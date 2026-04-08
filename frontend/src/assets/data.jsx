@@ -9,6 +9,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/YOLOv8m-Custom-Object-Detection',
     archLink: '#architecture',
     accent: '#F5A623',
+    difficulty: 'Hard',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/EffNet-Optimized-Transfer-Learning',
     archLink: null,
     accent: '#4DD9C0',
+    difficulty: 'Medium',
   },
   {
     id: 3,
@@ -29,6 +31,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/convnext-dental-cavity-detection',
     archLink: '#architecture',
     accent: '#F56E6E',
+    difficulty: 'Hard',
   },
   {
     id: 4,
@@ -39,6 +42,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/Dental-Cavity-Detection-DeepLearning',
     archLink: null,
     accent: '#9B7FFF',
+    difficulty: 'Medium',
   },
   {
     id: 5,
@@ -49,6 +53,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/Medical-Image-Detection-YOLOv8',
     archLink: '#architecture',
     accent: '#F5A623',
+    difficulty: 'Hard',
   },
   {
     id: 6,
@@ -59,6 +64,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/LLM-Latency-Predictor',
     archLink: null,
     accent: '#4DD9C0',
+    difficulty: 'Medium',
   },
    {
     id: 7,
@@ -69,6 +75,7 @@ export const PROJECTS = [
     github: 'https://github.com/ShahJahanBrohii/Neural-Style-Transfer-Pytorch-Implementation',
     archLink: null,
     accent: '#4DD9C0',
+    difficulty: 'Easy',
   },
 ];
 

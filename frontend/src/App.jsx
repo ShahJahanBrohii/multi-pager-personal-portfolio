@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar  from './components/Navbar';
+import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 import About   from './pages/About';
 import Portfolio      from './pages/Portfolio';
@@ -21,6 +22,7 @@ export default function App() {
     <BrowserRouter>
       <ScrollTop />
        <Navbar />
+       <BackToTop />
 
        <Routes>
         <Route path="/"               element={<Home />}           />
