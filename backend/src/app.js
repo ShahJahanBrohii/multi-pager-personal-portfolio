@@ -10,11 +10,15 @@ import apiRoutes from "./routes/index.js";
 
 const app = express();
 
+/* 🔐 Security Headers */
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginResourcePolicy: false,   // ← let us set it manually per route
+    crossOriginEmbedderPolicy: false,
   })
 );
+
+/* 🌐 CORS */
 app.use(
   cors({
     origin: env.CORS_ORIGIN,
@@ -22,6 +26,7 @@ app.use(
   })
 );
 
+/* 🛡️ Rate Limiting */
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -31,13 +36,28 @@ app.use(
   })
 );
 
+/* 📦 Logger */
 app.use(morgan("dev"));
+
+/* 📥 Body Parsers */
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
+/* 📁 Static Files — CORP header applied inline so it's never overridden */
+app.use(
+  "/uploads",
+  (req, res, next) => {
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    res.setHeader("Access-Control-Allow-Origin", env.CORS_ORIGIN);
+    next();
+  },
+  express.static(path.resolve(process.cwd(), "uploads"))
+);
+
+/* 🔗 API Routes */
 app.use("/api", apiRoutes);
 
+/* ❌ 404 + Error Handling */
 app.use(notFound);
 app.use(errorHandler);
 
