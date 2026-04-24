@@ -10,6 +10,29 @@
   flex-shrink: 0;
 }
 
+/* ── Screenshot thumbnail ── */
+.pcard__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--ink2, #111);
+  flex-shrink: 0;
+}
+
+.pcard__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.pcard:hover .pcard__thumb-img {
+  transform: scale(1.04);
+}
+
+/* ── Body ── */
 .pcard__body {
   padding: 18px 20px 22px;
   display: flex;
@@ -87,6 +110,6 @@
   margin-top: 4px;
 }
 
-/* featured variant — slightly more padding */
+/* featured variant */
 .pcard--featured .pcard__body { padding: 22px 24px 26px; }
 .pcard--featured .pcard__title { font-size: 18px; }
