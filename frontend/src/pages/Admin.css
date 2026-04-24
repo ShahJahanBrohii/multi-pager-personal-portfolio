@@ -1,0 +1,62 @@
+.admin-wrap {
+  display: grid;
+  gap: 20px;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-card {
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.admin-card input,
+.admin-card textarea,
+.admin-card select {
+  width: 100%;
+  background: var(--ink2);
+  border: 1px solid var(--wire2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.admin-err {
+  color: #ff7b7b;
+}
+
+.admin-note {
+  color: var(--text2);
+}
+
+.admin-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border-top: 1px solid var(--wire);
+  padding-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .admin-grid,
+  .admin-lists {
+    grid-template-columns: 1fr;
+  }
+}
