@@ -8,6 +8,7 @@ import Portfolio      from './pages/Portfolio';
 import Resume from './pages/Resume'
 import Certifications from './pages/Certifications';
 import Contact        from './pages/Contact';
+import Admin from './pages/Admin';
 import Footer  from './components/Footer';
 
 /* Scroll to top on every route change */
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/resume"         element={<Resume />}         />
                 <Route path="/certifications" element={<Certifications />} />
         <Route path="/contact"        element={<Contact />}        />
+        <Route path="/admin"          element={<Admin />}          />
         <Route path="*" element={
           <div style={{
             minHeight:'100vh', display:'flex', flexDirection:'column',

@@ -1,14 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
-import { PROJECTS } from '../assets/data';
+import { getProjects } from '../api/client';
 import './Portfolio.css';
 
-const CATS = ['All', 'ML', 'Backend'];
+const TAG_COLORS = {
+  ML: 'var(--rose)',
+  Backend: 'var(--teal)',
+};
 
 export default function Portfolio() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState('All');
 
-  const filtered = cat === 'All' ? PROJECTS : PROJECTS.filter(p => p.tag === cat);
+  useEffect(() => {
+    let mounted = true;
+    getProjects()
+      .then((res) => {
+        if (mounted) setProjects(res.data || []);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const CATS_DYNAMIC = ['All', ...new Set(projects.map((p) => p.tag))];
+  const filtered = cat === 'All' ? projects : projects.filter(p => p.tag === cat);
 
   return (
     <div className="page">
@@ -19,15 +39,18 @@ export default function Portfolio() {
           <p className="sec-eyebrow fu">Work</p>
           <h1 className="sec-title fu d1">All <em>Projects</em></h1>
           <p className="sec-sub fu d2">
-            {PROJECTS.length} projects across machine learning pipelines and backend systems.
+            {projects.length} projects across machine learning pipelines and backend systems.
           </p>
 
           {/* count pills */}
           <div className="port-counts fu d3">
             {[
-              { label: 'Total',   n: PROJECTS.length,                             c: 'var(--amber)' },
-              { label: 'ML',      n: PROJECTS.filter(p=>p.tag==='ML').length,     c: 'var(--rose)'  },
-              { label: 'Backend', n: PROJECTS.filter(p=>p.tag==='Backend').length,c: 'var(--teal)'  },
+              { label: 'Total', n: projects.length, c: 'var(--amber)' },
+              ...CATS_DYNAMIC.filter((c) => c !== 'All').map((label) => ({
+                label,
+                n: projects.filter((p) => p.tag === label).length,
+                c: TAG_COLORS[label] || 'var(--text2)',
+              })),
             ].map(({ label, n, c }) => (
               <div key={label} className="port-count">
                 <span style={{ color: c, fontFamily: 'var(--font-head)', fontSize: 28, fontWeight: 700, lineHeight: 1 }}>{n}</span>
@@ -45,7 +68,7 @@ export default function Portfolio() {
           {/* filter bar */}
           <div className="port-filter">
             <div className="port-filter__btns">
-              {CATS.map(c => (
+              {CATS_DYNAMIC.map(c => (
                 <button
                   key={c}
                   className={`port-filter__btn${cat === c ? ' active' : ''}`}
@@ -61,10 +84,12 @@ export default function Portfolio() {
           </div>
 
           {/* project grid */}
+          {loading && <p style={{ color: 'var(--text2)' }}>Loading projects...</p>}
+
           <div className="port-grid">
             {filtered.map((p, i) => (
               <div
-                key={p.id}
+                key={p._id || p.id}
                 className="fu"
                 style={{ animationDelay: `${i * 0.06}s` }}
               >

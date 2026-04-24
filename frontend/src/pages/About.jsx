@@ -1,7 +1,30 @@
-import { TIMELINE, STACK } from '../assets/data';
+import { useEffect, useState } from 'react';
+import { getContentOverview } from '../api/client';
 import './About.css';
 
 export default function About() {
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    getContentOverview()
+      .then((res) => {
+        if (mounted) setContent(res.data || null);
+      })
+      .catch(() => {
+        if (mounted) setContent(null);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const topTags = content?.highlights?.topTags || [];
+  const topIssuers = content?.highlights?.issuers || [];
+  const stack = content?.stack || [];
+  const timeline = content?.timeline || [];
+
   return (
     <div className="page">
 
@@ -11,8 +34,7 @@ export default function About() {
           <p className="sec-eyebrow fu">About</p>
           <h1 className="sec-title fu d1">The <em>Story</em> So Far</h1>
           <p className="sec-sub fu d2">
-            A curious CS student turning mathematical intuition into real-world software —
-            one API and one model at a time.
+            This page now reflects live backend data for skills, tags, certifications, and timeline milestones.
           </p>
         </div>
       </section>
@@ -29,34 +51,32 @@ export default function About() {
             </div>
 
             <h2 className="about-name">Shah Jahan </h2>
-            <p className="about-role">Backend Developer & ML Enthusiast</p>
+            <p className="about-role">{content?.heroRoles?.[0] || 'Backend Developer'}</p>
 
             <div className="about-body">
               <p>
-                I'm a Computer Science undergraduate at <strong>Sukkur IBA University</strong>,
-                Pakistan, with a CGPA of <strong>3.27 / 4.0</strong>. I'm deeply passionate about
-                two disciplines that turn out to share a lot of DNA: building robust backend systems
-                and training deep learning models.
+                This portfolio is powered by a live backend API. It currently tracks
+                <strong> {content?.stats?.projects || 0} projects</strong> and
+                <strong> {content?.stats?.certificates || 0} certifications</strong>.
               </p>
               <p>
-                My path started with simple HTML pages, evolved through the full MERN stack, and is
-                now converging on a specialization in <strong>deep learning</strong> — CNNs, LSTMs,
-                and NLP. I believe great backend code and great ML pipelines share the same values:
-                clean abstractions, measurable outputs, and an obsession with correctness.
+                Top domains from the database include
+                <strong> {topTags.length ? topTags.join(', ') : 'no tags yet'}</strong>, with
+                <strong> {content?.stats?.technologies || 0} technologies</strong> mapped from
+                project records.
               </p>
               <p>
-                When I'm not writing code I'm reading papers, experimenting on Kaggle, or building
-                something I can show people. I'm actively looking for internship opportunities where I
-                can contribute to real products and grow fast.
+                As new projects and certificates are created in the backend, this page updates
+                automatically without editing frontend arrays.
               </p>
             </div>
 
             <div className="about-meta">
               {[
-                ['Location',    'Sukkur, Sindh, PK'],
-                ['University',  'Sukkur IBA University'],
-                ['Focus',       'Backend · Deep Learning'],
-                ['CGPA',        '3.27 / 4.0'],
+                ['Projects', String(content?.stats?.projects || 0)],
+                ['Certificates', String(content?.stats?.certificates || 0)],
+                ['Domains', String(content?.stats?.tags || 0)],
+                ['Technologies', String(content?.stats?.technologies || 0)],
               ].map(([k, v]) => (
                 <div key={k} className="about-meta__row">
                   <span className="about-meta__key">{k}</span>
@@ -69,10 +89,10 @@ export default function About() {
           {/* right */}
           <div className="about-philo">
             {[
-              { icon: '⚡', title: 'Performance First',    body: 'Optimised queries, caching strategies, and lean inference — speed is a feature, not an afterthought.' },
-              { icon: '🧠', title: 'Data-Driven Decisions', body: 'Every architectural decision backed by measurement. Build, benchmark, iterate.' },
-              { icon: '🔒', title: 'Security by Default',  body: 'Auth, rate limiting, validation — baked in from day one, not retrofitted later.' },
-              { icon: '📐', title: 'Clean Architecture',   body: 'SOLID principles and separation of concerns. Code that reads like intentional prose.' },
+              { icon: '⚡', title: 'Top Domains', body: topTags.length ? topTags.join(', ') : 'No domains available yet.' },
+              { icon: '🧠', title: 'Tech Coverage', body: stack.length ? `${stack.slice(0, 8).join(', ')}${stack.length > 8 ? '...' : ''}` : 'No technologies available yet.' },
+              { icon: '🔒', title: 'Credential Sources', body: topIssuers.length ? topIssuers.slice(0, 3).join(', ') : 'No certification issuers available yet.' },
+              { icon: '📐', title: 'Live Data Mode', body: 'Projects, certifications, skills, and timeline are now backend-driven in real time.' },
             ].map(({ icon, title, body }) => (
               <div key={title} className="philo-card card">
                 <span className="philo-icon">{icon}</span>
@@ -91,9 +111,10 @@ export default function About() {
         <p className="sec-eyebrow" style={{ justifyContent: 'center', marginBottom: 16 }}>Tech Stack</p>
         <div className="about-marquee__track">
           <div className="about-marquee__inner">
-            {[...STACK, ...STACK].map((s, i) => (
+            {[...stack, ...stack].map((s, i) => (
               <span key={i} className="marquee-item">{s}</span>
             ))}
+            {stack.length === 0 && <span className="marquee-item">No technologies available yet</span>}
           </div>
         </div>
       </div>
@@ -104,12 +125,12 @@ export default function About() {
           <p className="sec-eyebrow">Journey</p>
           <h2 className="sec-title">ML <em>Timeline</em></h2>
           <p className="sec-sub" style={{ marginBottom: 60 }}>
-            From HTML basics to neural networks — the milestones that shaped me as a developer.
+            A live timeline generated from recent projects and certifications in MongoDB.
           </p>
 
           <div className="timeline">
             <div className="timeline__spine" />
-            {TIMELINE.map((item, i) => (
+            {timeline.map((item, i) => (
               <div
                 key={i}
                 className={`tl-item${i % 2 === 0 ? ' tl-item--left' : ' tl-item--right'}`}
@@ -133,6 +154,7 @@ export default function About() {
                 </div>
               </div>
             ))}
+            {timeline.length === 0 && <p style={{ color: 'var(--text2)' }}>No timeline data available yet.</p>}
           </div>
         </div>
       </section>

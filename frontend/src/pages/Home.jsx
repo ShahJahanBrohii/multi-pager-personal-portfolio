@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
-import { PROJECTS, STACK } from '../assets/data';
+import { getContentOverview, getProjects } from '../api/client';
 import './Home.css';
 
 /* ── Typewriter hook ── */
@@ -30,17 +30,37 @@ function useTypewriter(words, speed = 78, pause = 2100) {
   return text;
 }
 
-const WORDS  = ['Backend Developer', 'ML Enthusiast', 'Problem Solver', 'CS Undergrad'];
-const STATS  = [
-  { v: '40+',   l: 'Repositories'  },
-  { v: '3.27',  l: 'CGPA / 4.0'   },
-  { v: '6',     l: 'Certifications'},
-  { v: '∞',     l: 'Curiosity'     },
-];
-
 export default function Home() {
-  const typed   = useTypewriter(WORDS);
-  const top3    = PROJECTS.slice(0, 3);
+  const [projects, setProjects] = useState([]);
+  const [content, setContent] = useState(null);
+  const words = content?.heroRoles?.length ? content.heroRoles : ['Backend Developer', 'ML Enthusiast'];
+  const typed = useTypewriter(words);
+  const top3 = projects.slice(0, 3);
+  const stats = [
+    { v: String(content?.stats?.projects || 0), l: 'Projects' },
+    { v: String(content?.stats?.certificates || 0), l: 'Certificates' },
+    { v: String(content?.stats?.tags || 0), l: 'Domains' },
+    { v: String(content?.stats?.technologies || 0), l: 'Technologies' },
+  ];
+  const stack = content?.stack || [];
+
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([getProjects(), getContentOverview()])
+      .then(([projectRes, contentRes]) => {
+        if (!mounted) return;
+        setProjects(projectRes.data || []);
+        setContent(contentRes.data || null);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setProjects([]);
+        setContent(null);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="page">
@@ -72,9 +92,9 @@ export default function Home() {
 
           {/* bio */}
           <p className="hero__bio fu d4">
-            CS undergraduate at <strong>Sukkur IBA University</strong> (CGPA 3.27).
-            Passionate about building scalable backend systems and training deep learning
-            models that solve real problems.
+            Live portfolio powered by backend APIs with <strong>{content?.stats?.projects || 0} projects</strong>
+            and <strong> {content?.stats?.certificates || 0} certifications</strong>. Content updates in real time
+            as your backend data changes.
           </p>
 
           {/* cta row */}
@@ -92,7 +112,7 @@ export default function Home() {
 
           {/* stats */}
           <div className="hero__stats fu d5">
-            {STATS.map(({ v, l }) => (
+            {stats.map(({ v, l }) => (
               <div key={l} className="hero__stat">
                 <span className="hero__stat-v">{v}</span>
                 <span className="hero__stat-l">{l}</span>
@@ -111,9 +131,10 @@ export default function Home() {
       {/* ══ TECH MARQUEE ══════════════════════════════════════ */}
       <div className="marquee-wrap">
         <div className="marquee-track">
-          {[...STACK, ...STACK].map((s, i) => (
+          {[...stack, ...stack].map((s, i) => (
             <span key={i} className="marquee-item">{s}</span>
           ))}
+          {stack.length === 0 && <span className="marquee-item">No technologies available yet</span>}
         </div>
       </div>
 
@@ -134,7 +155,7 @@ export default function Home() {
 
           <div className="home-projects__grid">
             {top3.map(p => (
-              <ProjectCard key={p.id} project={p} featured />
+              <ProjectCard key={p._id || p.id} project={p} featured />
             ))}
           </div>
 
