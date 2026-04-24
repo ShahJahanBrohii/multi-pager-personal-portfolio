@@ -78,10 +78,11 @@ export default function Contact() {
     try {
       /*
        * POST to your Express backend.
-       * Backend should: validate → save to MongoDB → send email via Nodemailer → return { success: true }
-       * Set REACT_APP_API_URL=http://localhost:5000/api in .env
+       * Backend should: validate -> save to MongoDB -> send email via Nodemailer -> return { success: true }
+       * Set VITE_API_URL=http://localhost:5000/api in .env.local
        */
-      const url = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api') + '/contact';
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const url = `${baseUrl}/contact`;
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -90,7 +91,7 @@ export default function Contact() {
       if (!res.ok) throw new Error(await res.text());
       setStatus('success');
       setFields(BLANK);
-    } catch (err) {
+    } catch {
       setStatus('error');
       setApiErr('Could not send message. Please email me directly at shahjahanbrohii@gmail.com');
     }
