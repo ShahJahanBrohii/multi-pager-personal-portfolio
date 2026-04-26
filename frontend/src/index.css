@@ -63,6 +63,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 14px; }
 
+#root {
+  min-height: 100vh;
+}
+
 body {
   background: var(--ink);
   color: var(--text);
@@ -162,6 +166,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.2s;
   cursor: pointer;
   white-space: nowrap;
+  max-width: 100%;
 }
 
 .btn-amber {
@@ -246,5 +251,12 @@ img { max-width: 100%; display: block; }
   .hide-sm   { display: none !important; }
 }
 @media (max-width: 480px) {
+  .sec-title { font-size: clamp(28px, 10vw, 40px); }
+  .sec-sub { max-width: 100%; }
+  .btn {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
   .hide-xs   { display: none !important; }
 }

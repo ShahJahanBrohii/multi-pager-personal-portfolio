@@ -108,6 +108,10 @@
 }
 
 @media (max-width: 640px) {
+  .footer {
+    padding: 34px 0;
+  }
+
   .footer__inner {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -128,6 +132,10 @@
   .footer__soc {
     width: 32px;
     height: 32px;
+  }
+
+  .footer__socials {
+    gap: 6px;
   }
 }
 
