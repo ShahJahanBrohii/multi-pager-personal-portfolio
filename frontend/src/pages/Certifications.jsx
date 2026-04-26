@@ -3,6 +3,7 @@ import { getCertificates } from '../api/client';
 import './Certifications.css';
 
 const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
+const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
 
 function getCertImageSrc(cert) {
   if (cert.imageUrl) return cert.imageUrl;
@@ -105,12 +106,14 @@ export default function Certifications() {
             >
               View GitHub Profile ↗
             </a>
-            <a href="/resume.pdf" download className="btn btn-amber">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Download Full Resume
-            </a>
+            {RESUME_URL && (
+              <a href={RESUME_URL} download className="btn btn-amber">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download Full Resume
+              </a>
+            )}
           </div>
         </div>
       </section>
