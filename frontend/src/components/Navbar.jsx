@@ -67,6 +67,13 @@ export default function Navbar() {
             >
               LinkedIn ↗
             </a>
+            <a
+              href="https://www.kaggle.com/shahjahanabdullatif"
+              target="_blank" rel="noreferrer"
+              className="btn btn-outline nav__cta"
+            >
+              Kaggle ↗
+            </a>
           </div>
 
           {/* Hamburger */}
@@ -111,6 +118,14 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
             >
               LinkedIn ↗
+            </a>
+            <a
+              href="https://www.kaggle.com/shahjahanabdullatif"
+              target="_blank" rel="noreferrer"
+              className="btn btn-outline"
+              onClick={() => setOpen(false)}
+            >
+              Kaggle ↗
             </a>
         </div>
       </div>
