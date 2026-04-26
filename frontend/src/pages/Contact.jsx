@@ -16,7 +16,7 @@ function validate({ name, email, subject, message }) {
 const INFO = [
   {
     label: 'Email',
-    value: 'shahjahan.bscsf22@iba-suk.edu.pk',
+    value: 'shahjahanbrohii@gmail.com',
     href: 'mailto:shahjahanbrohii@gmail.com',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -76,11 +76,6 @@ export default function Contact() {
     setStatus('loading');
     setApiErr('');
     try {
-      /*
-       * POST to your Express backend.
-       * Backend should: validate -> save to MongoDB -> send email via Nodemailer -> return { success: true }
-       * Set VITE_API_URL=http://localhost:5000/api in .env.local
-       */
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
       const url = `${baseUrl}/contact`;
       const res = await fetch(url, {
@@ -206,7 +201,7 @@ export default function Contact() {
                 </button>
 
                 <p className="contact-note">
-                  Messages are sent via <code>POST /api/contact</code> → saved in MongoDB + email notification via Nodemailer.
+                  Messages are sent via <code>POST /api/contact</code> and stored securely in the backend database.
                 </p>
               </form>
             )}
