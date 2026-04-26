@@ -102,6 +102,64 @@
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--wire2);
+  background: var(--ink3);
+  color: var(--text);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  appearance: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text3);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.12);
+  background: var(--ink4);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.field input.err,
+.field textarea.err {
+  border-color: rgba(255, 82, 82, 0.8);
+  box-shadow: 0 0 0 3px rgba(255, 82, 82, 0.12);
+}
+
+.ferr {
+  font-size: 11px;
+  color: #ff7b7b;
+}
+
 .contact-submit {
   width: 100%;
   justify-content: center;
@@ -206,5 +264,10 @@
   .cinfo-row {
     align-items: flex-start;
     gap: 12px;
+  }
+  .field input,
+  .field textarea {
+    padding: 11px 12px;
+    font-size: 12px;
   }
 }
