@@ -54,9 +54,24 @@
   padding-top: 10px;
 }
 
+.admin-item span {
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 900px) {
   .admin-grid,
   .admin-lists {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

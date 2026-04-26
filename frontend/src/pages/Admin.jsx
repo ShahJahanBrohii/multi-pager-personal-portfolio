@@ -7,6 +7,8 @@ import {
   getCertificates,
   getProjects,
   loginAdmin,
+  updateCertificate,
+  updateProject,
 } from "../api/client";
 import "./Admin.css";
 
@@ -42,8 +44,10 @@ export default function Admin() {
 
   const [projectForm, setProjectForm] = useState(projectBlank);
   const [projectImage, setProjectImage] = useState(null);
+  const [editingProjectId, setEditingProjectId] = useState("");
   const [certForm, setCertForm] = useState(certBlank);
   const [certImage, setCertImage] = useState(null);
+  const [editingCertId, setEditingCertId] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
 
@@ -93,11 +97,16 @@ export default function Admin() {
       const fd = new FormData();
       Object.entries(projectForm).forEach(([k, v]) => fd.append(k, v));
       if (projectImage) fd.append("image", projectImage);
-      await createProject(token, fd);
+      if (editingProjectId) {
+        await updateProject(token, editingProjectId, fd);
+      } else {
+        await createProject(token, fd);
+      }
       setProjectForm(projectBlank);
       setProjectImage(null);
+      setEditingProjectId("");
       await refreshData();
-      setNotice("Project created.");
+      setNotice(editingProjectId ? "Project updated." : "Project created.");
     } catch (err) {
       setNotice(err.message);
     } finally {
@@ -114,16 +123,61 @@ export default function Admin() {
       const fd = new FormData();
       Object.entries(certForm).forEach(([k, v]) => fd.append(k, v));
       if (certImage) fd.append("image", certImage);
-      await createCertificate(token, fd);
+      if (editingCertId) {
+        await updateCertificate(token, editingCertId, fd);
+      } else {
+        await createCertificate(token, fd);
+      }
       setCertForm(certBlank);
       setCertImage(null);
+      setEditingCertId("");
       await refreshData();
-      setNotice("Certificate created.");
+      setNotice(editingCertId ? "Certificate updated." : "Certificate created.");
     } catch (err) {
       setNotice(err.message);
     } finally {
       setBusy(false);
     }
+  }
+
+  function startProjectEdit(project) {
+    setEditingProjectId(project._id);
+    setProjectForm({
+      title: project.title || "",
+      desc: project.desc || "",
+      tag: project.tag || "",
+      tech: Array.isArray(project.tech) ? project.tech.join(", ") : project.tech || "",
+      github: project.github || "",
+      kaggleNotebook: project.kaggleNotebook || "",
+      difficulty: project.difficulty || "Medium",
+    });
+    setProjectImage(null);
+    setNotice("Editing project. Update fields and save.");
+  }
+
+  function cancelProjectEdit() {
+    setEditingProjectId("");
+    setProjectForm(projectBlank);
+    setProjectImage(null);
+  }
+
+  function startCertificateEdit(certificate) {
+    setEditingCertId(certificate._id);
+    setCertForm({
+      title: certificate.title || "",
+      issuer: certificate.issuer || "",
+      year: certificate.year || "",
+      tag: certificate.tag || "",
+      desc: certificate.desc || "",
+    });
+    setCertImage(null);
+    setNotice("Editing certificate. Update fields and save.");
+  }
+
+  function cancelCertificateEdit() {
+    setEditingCertId("");
+    setCertForm(certBlank);
+    setCertImage(null);
   }
 
   async function onDeleteProject(id) {
@@ -182,7 +236,7 @@ export default function Admin() {
           {isAuthed && (
             <div className="admin-grid">
               <form className="card admin-card" onSubmit={onCreateProject}>
-                <h3>Create Project</h3>
+                <h3>{editingProjectId ? "Edit Project" : "Create Project"}</h3>
                 <input value={projectForm.title} onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })} placeholder="Title" required />
                 <textarea value={projectForm.desc} onChange={(e) => setProjectForm({ ...projectForm, desc: e.target.value })} placeholder="Description" rows={4} required />
                 <input value={projectForm.tag} onChange={(e) => setProjectForm({ ...projectForm, tag: e.target.value })} placeholder="Tag" required />
@@ -195,18 +249,24 @@ export default function Admin() {
                   <option>Hard</option>
                 </select>
                 <input type="file" accept="image/*" onChange={(e) => setProjectImage(e.target.files?.[0] || null)} />
-                <button disabled={busy} className="btn btn-amber" type="submit">Save Project</button>
+                <button disabled={busy} className="btn btn-amber" type="submit">{editingProjectId ? "Update Project" : "Save Project"}</button>
+                {editingProjectId && (
+                  <button type="button" className="btn btn-outline" onClick={cancelProjectEdit}>Cancel Edit</button>
+                )}
               </form>
 
               <form className="card admin-card" onSubmit={onCreateCertificate}>
-                <h3>Create Certificate</h3>
+                <h3>{editingCertId ? "Edit Certificate" : "Create Certificate"}</h3>
                 <input value={certForm.title} onChange={(e) => setCertForm({ ...certForm, title: e.target.value })} placeholder="Title" required />
                 <input value={certForm.issuer} onChange={(e) => setCertForm({ ...certForm, issuer: e.target.value })} placeholder="Issuer" required />
                 <input value={certForm.year} onChange={(e) => setCertForm({ ...certForm, year: e.target.value })} placeholder="Year" required />
                 <input value={certForm.tag} onChange={(e) => setCertForm({ ...certForm, tag: e.target.value })} placeholder="Tag" required />
                 <textarea value={certForm.desc} onChange={(e) => setCertForm({ ...certForm, desc: e.target.value })} placeholder="Short description" rows={4} />
-                <input type="file" accept="image/*" onChange={(e) => setCertImage(e.target.files?.[0] || null)} required />
-                <button disabled={busy} className="btn btn-amber" type="submit">Save Certificate</button>
+                <input type="file" accept="image/*" onChange={(e) => setCertImage(e.target.files?.[0] || null)} required={!editingCertId} />
+                <button disabled={busy} className="btn btn-amber" type="submit">{editingCertId ? "Update Certificate" : "Save Certificate"}</button>
+                {editingCertId && (
+                  <button type="button" className="btn btn-outline" onClick={cancelCertificateEdit}>Cancel Edit</button>
+                )}
               </form>
             </div>
           )}
@@ -217,7 +277,12 @@ export default function Admin() {
               {loading ? <p>Loading...</p> : projects.map((p) => (
                 <div key={p._id} className="admin-item">
                   <span>{p.title}</span>
-                  {isAuthed && <button className="btn btn-outline" onClick={() => onDeleteProject(p._id)}>Delete</button>}
+                  {isAuthed && (
+                    <>
+                      <button className="btn btn-outline" onClick={() => startProjectEdit(p)}>Edit</button>
+                      <button className="btn btn-outline" onClick={() => onDeleteProject(p._id)}>Delete</button>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
@@ -227,7 +292,12 @@ export default function Admin() {
               {loading ? <p>Loading...</p> : certificates.map((c) => (
                 <div key={c._id} className="admin-item">
                   <span>{c.title}</span>
-                  {isAuthed && <button className="btn btn-outline" onClick={() => onDeleteCertificate(c._id)}>Delete</button>}
+                  {isAuthed && (
+                    <>
+                      <button className="btn btn-outline" onClick={() => startCertificateEdit(c)}>Edit</button>
+                      <button className="btn btn-outline" onClick={() => onDeleteCertificate(c._id)}>Delete</button>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
