@@ -4,6 +4,8 @@ import ProjectCard from '../components/ProjectCard';
 import { getContentOverview, getProjects } from '../api/client';
 import './Home.css';
 
+const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
+
 /* ── Typewriter hook ── */
 function useTypewriter(words, speed = 78, pause = 2100) {
   const [text,    setText]    = useState('');
@@ -104,10 +106,12 @@ export default function Home() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
             <Link to="/contact" className="btn btn-outline">Get in Touch</Link>
-            <a href="/resume.pdf" download className="btn btn-ghost hide-xs">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Resume
-            </a>
+            {RESUME_URL && (
+              <a href={RESUME_URL} download className="btn btn-ghost hide-xs">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Resume
+              </a>
+            )}
           </div>
 
           {/* stats */}
