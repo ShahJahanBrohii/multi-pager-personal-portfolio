@@ -22,6 +22,9 @@ export const listProjects = asyncHandler(async (req, res) => {
   if (q) filter.title = { $regex: q, $options: "i" };
   if (published === "true" || published === "false") {
     filter.published = published === "true";
+  } else {
+    // Public listing defaults to published content only.
+    filter.published = true;
   }
 
   const items = await Project.find(filter).sort({ order: 1, createdAt: -1 });
