@@ -3,11 +3,13 @@
 Backend API for the multi-page portfolio project.
 
 ## Features
-- Projects CRUD with GitHub, Kaggle, and optional image upload.
+- Projects CRUD with GitHub, Kaggle, live demo, architecture link, and optional image upload.
 - Certificates CRUD with image upload and description.
 - Contact form endpoint for frontend integration.
 - Admin JWT authentication for protected write operations.
 - MongoDB persistence with Mongoose.
+- Public listings default to published projects only.
+- Admin can update project and certificate details after creation.
 
 ## Quick Start
 1. Install dependencies:
@@ -22,6 +24,8 @@ Backend API for the multi-page portfolio project.
 `http://localhost:5000/api`
 
 ## Endpoints
+- `GET /api/health`
+
 - `POST /api/auth/login`
 - `GET /api/auth/me` (admin token required)
 
@@ -40,7 +44,11 @@ Backend API for the multi-page portfolio project.
 - `POST /api/contact`
 - `GET /api/contact` (admin token)
 
+- `GET /api/content/overview`
+- `GET /api/content/site`
+
 ## Notes
 - Uploaded files are served from `/uploads`.
 - Frontend can use `VITE_API_URL=http://localhost:5000/api`.
+- Frontend can optionally use `VITE_RESUME_URL` to show resume download buttons.
 - Add `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` in `.env` before startup.
