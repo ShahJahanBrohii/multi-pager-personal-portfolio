@@ -41,6 +41,14 @@ export function createProject(token, formData) {
   });
 }
 
+export function updateProject(token, id, formData) {
+  return request(`/projects/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  });
+}
+
 export function deleteProject(token, id) {
   return request(`/projects/${id}`, {
     method: "DELETE",
@@ -51,6 +59,14 @@ export function deleteProject(token, id) {
 export function createCertificate(token, formData) {
   return request("/certificates", {
     method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  });
+}
+
+export function updateCertificate(token, id, formData) {
+  return request(`/certificates/${id}`, {
+    method: "PUT",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
