@@ -20,6 +20,18 @@ Backend API for the multi-page portfolio project.
 4. Start development server:
    npm run dev
 
+## Deploy on Render
+1. Create a Render Web Service from this repo.
+2. Set Root Directory to `backend`.
+3. Build Command: `npm install`
+4. Start Command: `npm start`
+5. Health Check Path: `/api/health`
+6. Add required environment variables from `.env.example`.
+7. Set `CORS_ORIGIN` to your Vercel domain(s) as comma-separated values.
+
+Example:
+`CORS_ORIGIN=https://your-frontend.vercel.app,https://your-frontend-git-main-yourteam.vercel.app`
+
 ## API Base URL
 `http://localhost:5000/api`
 
@@ -52,3 +64,4 @@ Backend API for the multi-page portfolio project.
 - Frontend can use `VITE_API_URL=http://localhost:5000/api`.
 - Frontend can optionally use `VITE_RESUME_URL` to show resume download buttons.
 - Add `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` in `.env` before startup.
+- Render file storage is ephemeral. Move uploads to object storage for production durability.

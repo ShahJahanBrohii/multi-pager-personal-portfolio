@@ -39,6 +39,43 @@ A responsive multi-page portfolio app with a React/Vite frontend and an Express/
 3. Set frontend environment variables in `.env`
 4. Start the app with `npm run dev`
 
+## Deployment (Vercel + Render)
+
+### Backend on Render
+
+1. Create a new Web Service in Render from this repository.
+2. Set Root Directory to `backend`.
+3. Build Command: `npm install`
+4. Start Command: `npm start`
+5. Health Check Path: `/api/health`
+6. Add environment variables:
+	- `MONGODB_URI`
+	- `JWT_SECRET`
+	- `ADMIN_EMAIL`
+	- `ADMIN_PASSWORD`
+	- `PORT` (optional; Render provides this automatically)
+	- `JWT_EXPIRES_IN` (optional)
+	- `MAX_FILE_SIZE_MB` (optional)
+	- `CORS_ORIGIN` as comma-separated origins, for example:
+	  - `https://your-frontend.vercel.app,https://your-frontend-git-main-yourteam.vercel.app`
+
+### Frontend on Vercel
+
+1. Import this repository into Vercel.
+2. Set Root Directory to `frontend`.
+3. Build Command: `npm run build`
+4. Output Directory: `dist`
+5. Add environment variables:
+	- `VITE_API_URL=https://your-render-service.onrender.com/api`
+	- `VITE_RESUME_URL` (optional)
+6. Ensure Render `CORS_ORIGIN` includes your Vercel production domain.
+
+### Notes
+
+- `frontend/vercel.json` is included for SPA rewrite support with React Router.
+- `render.yaml` is included for quick Render service setup.
+- Render disk is ephemeral, so uploaded files in `/uploads` are not permanent across deploys/restarts. Use object storage (S3/Cloudinary) for persistent media in production.
+
 ## Environment Variables
 
 ### Backend `backend/.env`
