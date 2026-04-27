@@ -9,6 +9,21 @@ import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 import apiRoutes from "./routes/index.js";
 
 const app = express();
+const allowedOrigins = new Set(env.CORS_ORIGINS);
+
+if (env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
+
+function resolveAllowedOrigin(req) {
+  const requestOrigin = req.get("origin");
+  if (requestOrigin && allowedOrigins.has(requestOrigin)) {
+    return requestOrigin;
+  }
+
+  // For non-browser requests (curl/health checks), fall back to the first configured origin.
+  return env.CORS_ORIGINS[0] || "*";
+}
 
 /* 🔐 Security Headers */
 app.use(
@@ -21,7 +36,11 @@ app.use(
 /* 🌐 CORS */
 app.use(
   cors({
-    origin: env.CORS_ORIGIN,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.has(origin)) return callback(null, true);
+      return callback(null, false);
+    },
     credentials: true,
   })
 );
@@ -48,7 +67,8 @@ app.use(
   "/uploads",
   (req, res, next) => {
     res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-    res.setHeader("Access-Control-Allow-Origin", env.CORS_ORIGIN);
+    res.setHeader("Access-Control-Allow-Origin", resolveAllowedOrigin(req));
+    res.setHeader("Vary", "Origin");
     next();
   },
   express.static(path.resolve(process.cwd(), "uploads"))
