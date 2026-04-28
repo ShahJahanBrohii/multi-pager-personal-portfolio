@@ -4,12 +4,12 @@ import './Certifications.css';
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
 
 function getCertImageSrc(cert) {
-  if (cert.imageUrl) return cert.imageUrl;
-  if (cert.image) return cert.image;
   if (cert.imagePath) {
     const cleanPath = String(cert.imagePath).replace(/^\/+/, '');
     return `${API_ORIGIN}/${cleanPath}`;
   }
+  if (cert.imageUrl) return cert.imageUrl;
+  if (cert.image) return cert.image;
   return '';
 }
 

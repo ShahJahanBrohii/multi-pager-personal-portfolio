@@ -8,11 +8,11 @@ const DIFFICULTY_COLORS = {
 };
 
 function getImageSrc(project) {
-  if (project.imageUrl) return project.imageUrl;
   if (project.imagePath) {
     const cleanPath = String(project.imagePath).replace(/^\/+/, '');
     return `${API_ORIGIN}/${cleanPath}`;
   }
+  if (project.imageUrl) return project.imageUrl;
   return null;
 }
 

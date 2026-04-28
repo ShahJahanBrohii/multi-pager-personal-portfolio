@@ -27,7 +27,8 @@ Backend API for the multi-page portfolio project.
 4. Start Command: `npm start`
 5. Health Check Path: `/api/health`
 6. Add required environment variables from `.env.example`.
-7. Set `CORS_ORIGIN` to your Vercel domain(s) as comma-separated values.
+7. Set `MONGODB_URI` to your MongoDB Atlas connection string, not a local URI.
+8. Set `CORS_ORIGIN` to your Vercel domain(s) as comma-separated values.
 
 Example:
 `CORS_ORIGIN=https://your-frontend.vercel.app,https://your-frontend-git-main-yourteam.vercel.app`
