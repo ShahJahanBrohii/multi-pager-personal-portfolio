@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { submitContactMessage } from '../api/client';
 import './Contact.css';
 
 const BLANK = { name: '', email: '', subject: '', message: '' };
@@ -76,14 +77,7 @@ export default function Contact() {
     setStatus('loading');
     setApiErr('');
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-      const url = `${baseUrl}/contact`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fields),
-      });
-      if (!res.ok) throw new Error(await res.text());
+      await submitContactMessage(fields);
       setStatus('success');
       setFields(BLANK);
     } catch {
