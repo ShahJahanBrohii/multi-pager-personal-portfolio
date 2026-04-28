@@ -91,7 +91,7 @@ A responsive multi-page portfolio app with a React/Vite frontend and an Express/
 
 ### Frontend `frontend/.env`
 
-- `VITE_API_URL=http://localhost:5000/api`
+- `VITE_API_URL=https://multi-pager-personal-portfolio.onrender.com/api`
 - `VITE_RESUME_URL` optional direct URL for the resume download button
 
 ## Scripts
@@ -125,7 +125,7 @@ A responsive multi-page portfolio app with a React/Vite frontend and an Express/
 
 ## Useful API Base URL
 
-`http://localhost:5000/api`
+`https://multi-pager-personal-portfolio.onrender.com/api`
 
 ## Key Endpoints
 
