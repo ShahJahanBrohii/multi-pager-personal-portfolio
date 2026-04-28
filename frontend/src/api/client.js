@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "https://multi-pager-personal-portfolio.onrender.com/api";
+export const API_ORIGIN = API_BASE.replace(/\/api\/?$/, "");
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, options);
@@ -23,6 +24,14 @@ export function getCertificates() {
 
 export function getContentOverview() {
   return request("/content/overview");
+}
+
+export function submitContactMessage(fields) {
+  return request("/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(fields),
+  });
 }
 
 export function loginAdmin(email, password) {

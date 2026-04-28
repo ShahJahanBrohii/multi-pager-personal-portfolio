@@ -1,6 +1,5 @@
 import './ProjectCard.css';
-
-const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
+import { API_ORIGIN } from '../api/client';
 
 const DIFFICULTY_COLORS = {
   Easy: '#4DD9C0',
