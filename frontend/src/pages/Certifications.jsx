@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getCertificates } from '../api/client';
+import { API_ORIGIN, getCertificates } from '../api/client';
 import './Certifications.css';
-
-const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
 
 function getCertImageSrc(cert) {
