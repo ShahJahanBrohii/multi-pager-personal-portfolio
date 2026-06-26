@@ -1,10 +1,27 @@
 .certs-hero { padding-bottom: 40px; }
 
+.cert-category {
+  margin-bottom: 60px;
+}
+
+.cert-category:last-of-type {
+  margin-bottom: 48px;
+}
+
+.cert-category__title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24px;
+  font-family: var(--font-body);
+  letter-spacing: -0.3px;
+}
+
 .certs-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 
 .cert-card {

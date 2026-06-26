@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { submitContactMessage } from '../api/client';
 import './Contact.css';
 
 const BLANK = { name: '', email: '', subject: '', message: '' };
@@ -60,8 +59,7 @@ const INFO = [
 export default function Contact() {
   const [fields, setFields]   = useState(BLANK);
   const [errors, setErrors]   = useState({});
-  const [status, setStatus]   = useState('idle'); // idle | loading | success | error
-  const [apiErr, setApiErr]   = useState('');
+  const [status, setStatus]   = useState('idle'); // idle | success
 
   const change = e => {
     const { name, value } = e.target;
@@ -74,16 +72,14 @@ export default function Contact() {
     const errs = validate(fields);
     if (Object.keys(errs).length) { setErrors(errs); return; }
 
-    setStatus('loading');
-    setApiErr('');
-    try {
-      await submitContactMessage(fields);
-      setStatus('success');
-      setFields(BLANK);
-    } catch {
-      setStatus('error');
-      setApiErr('Could not send message. Please email me directly at shahjahanbrohii@gmail.com');
-    }
+    // For frontend-only: show success and open email client
+    const subject = encodeURIComponent(fields.subject);
+    const body = encodeURIComponent(`Name: ${fields.name}\nEmail: ${fields.email}\n\nMessage:\n${fields.message}`);
+    window.location.href = `mailto:shahjahanbrohii@gmail.com?subject=${subject}&body=${body}`;
+    
+    setStatus('success');
+    setFields(BLANK);
+    setTimeout(() => setStatus('idle'), 3000);
   };
 
   return (
@@ -177,25 +173,15 @@ export default function Contact() {
                   {errors.message && <span className="ferr">{errors.message}</span>}
                 </div>
 
-                {status === 'error' && (
-                  <p className="contact-api-err">{apiErr}</p>
-                )}
-
-                <button type="submit" className="btn btn-amber contact-submit" disabled={status === 'loading'}>
-                  {status === 'loading' ? (
-                    <><span className="contact-spin" />Sending…</>
-                  ) : (
-                    <>
-                      Send Message
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                      </svg>
-                    </>
-                  )}
+                <button type="submit" className="btn btn-amber contact-submit">
+                  Send Message
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
                 </button>
 
                 <p className="contact-note">
-                  Messages are sent via <code>POST /api/contact</code> and stored securely in the backend database.
+                  This will open your email client to send me a message directly.
                 </p>
               </form>
             )}

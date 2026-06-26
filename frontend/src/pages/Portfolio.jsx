@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
-import { getProjects } from '../api/client';
+import { projectsData } from '../data/projects';
 import './Portfolio.css';
 
 const TAG_COLORS = {
@@ -9,23 +9,8 @@ const TAG_COLORS = {
 };
 
 export default function Portfolio() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects] = useState(projectsData);
   const [cat, setCat] = useState('All');
-
-  useEffect(() => {
-    let mounted = true;
-    getProjects()
-      .then((res) => {
-        if (mounted) setProjects(res.data || []);
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const CATS_DYNAMIC = ['All', ...new Set(projects.map((p) => p.tag))];
   const filtered = cat === 'All' ? projects : projects.filter(p => p.tag === cat);
@@ -84,8 +69,6 @@ export default function Portfolio() {
           </div>
 
           {/* project grid */}
-          {loading && <p style={{ color: 'var(--text2)' }}>Loading projects...</p>}
-
           <div className="port-grid">
             {filtered.map((p, i) => (
               <div

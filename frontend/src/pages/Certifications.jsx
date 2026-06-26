@@ -1,35 +1,46 @@
-import { useEffect, useState } from 'react';
-import { API_ORIGIN, getCertificates } from '../api/client';
+import { useState } from 'react';
+import { certificatesData } from '../data/certificates';
 import './Certifications.css';
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
 
+// Define certificate categories in order
+const CERT_CATEGORIES = [
+  'Courses',
+  'Workshops',
+  'Webinars/Sessions',
+  'Writing',
+  'Internships',
+  'Volunteering'
+];
+
 function getCertImageSrc(cert) {
   if (cert.imageUrl) return cert.imageUrl;
-  if (cert.imagePath) {
-    const cleanPath = String(cert.imagePath).replace(/^\/+/, '');
-    return `${API_ORIGIN}/${cleanPath}`;
-  }
+  if (cert.imagePath) return cert.imagePath;
   if (cert.image) return cert.image;
   return '';
 }
 
-export default function Certifications() {
-  const [certs, setCerts] = useState([]);
-  const [loading, setLoading] = useState(true);
+function groupCertsByCategory(certs) {
+  const grouped = {};
+  CERT_CATEGORIES.forEach(cat => {
+    grouped[cat] = [];
+  });
+  
+  certs.forEach(cert => {
+    const category = cert.category || 'Courses';
+    if (grouped[category]) {
+      grouped[category].push(cert);
+    } else {
+      grouped[category] = [cert];
+    }
+  });
+  
+  return grouped;
+}
 
-  useEffect(() => {
-    let mounted = true;
-    getCertificates()
-      .then((res) => {
-        if (mounted) setCerts(res.data || []);
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
+export default function Certifications() {
+  const [certs] = useState(certificatesData);
+  const groupedCerts = groupCertsByCategory(certs);
 
   return (
     <div className="page">
@@ -47,60 +58,75 @@ export default function Certifications() {
         </div>
       </section>
 
-      {/* ══ CERT GRID ═════════════════════════════════════════ */}
+      {/* ══ CERT CATEGORIES ═══════════════════════════════════ */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="certs-grid">
-            {loading && <p style={{ color: 'var(--text2)' }}>Loading certifications...</p>}
-            {certs.map((c, i) => {
-              const imageSrc = getCertImageSrc(c);
+          {!certs || certs.length === 0 ? (
+            <p style={{ color: 'var(--text2)' }}>No certifications added yet.</p>
+          ) : (
+            CERT_CATEGORIES.map((category) => {
+              const categoryCerts = groupedCerts[category] || [];
+              
+              // Only show categories that have certificates
+              if (categoryCerts.length === 0) return null;
+              
               return (
-                <div
-                  key={c._id || i}
-                  className="cert-card card fu"
-                  style={{ animationDelay: `${i * 0.07}s` }}
-                >
-                  {imageSrc && (
-                    <div className="cert-card__thumb">
-                      <img
-                        src={imageSrc}
-                        alt={`${c.title} certificate`}
-                        loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.closest('.cert-card__thumb').style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
+                <div key={category} className="cert-category">
+                  <h2 className="cert-category__title">{category}</h2>
+                  <div className="certs-grid">
+                    {categoryCerts.map((c, i) => {
+                      const imageSrc = getCertImageSrc(c);
+                      return (
+                        <div
+                          key={c._id || i}
+                          className="cert-card card fu"
+                          style={{ animationDelay: `${i * 0.07}s` }}
+                        >
+                          {imageSrc && (
+                            <div className="cert-card__thumb">
+                              <img
+                                src={imageSrc}
+                                alt={`${c.title} certificate`}
+                                loading="lazy"
+                                onError={(e) => {
+                                  e.currentTarget.closest('.cert-card__thumb').style.display = 'none';
+                                }}
+                              />
+                            </div>
+                          )}
 
-                  <div className="cert-card__bar" style={{ background: c.color }} />
+                          <div className="cert-card__bar" style={{ background: c.color }} />
 
-                  <div className="cert-card__body">
-                    <div className="cert-card__top">
-                      <span
-                        className="chip"
-                        style={{ color: c.color, borderColor: `${c.color}40`, background: `${c.color}12` }}
-                      >
-                        {c.tag}
-                      </span>
-                      <span className="cert-card__year">{c.year}</span>
-                    </div>
+                          <div className="cert-card__body">
+                            <div className="cert-card__top">
+                              <span
+                                className="chip"
+                                style={{ color: c.color, borderColor: `${c.color}40`, background: `${c.color}12` }}
+                              >
+                                {c.tag}
+                              </span>
+                              <span className="cert-card__year">{c.year}</span>
+                            </div>
 
-                    <div className="cert-card__icon" style={{ borderColor: `${c.color}40`, background: `${c.color}10` }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={c.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="8" r="6"/>
-                        <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-                      </svg>
-                    </div>
+                            <div className="cert-card__icon" style={{ borderColor: `${c.color}40`, background: `${c.color}10` }}>
+                              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={c.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="8" r="6"/>
+                                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                              </svg>
+                            </div>
 
-                    <h3 className="cert-card__title">{c.title}</h3>
-                    <p className="cert-card__issuer">{c.issuer}</p>
-                    {c.desc && <p className="cert-card__desc">{c.desc}</p>}
+                            <h3 className="cert-card__title">{c.title}</h3>
+                            <p className="cert-card__issuer">{c.issuer}</p>
+                            {c.desc && <p className="cert-card__desc">{c.desc}</p>}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );
-            })}
-          </div>
+            })
+          )}
 
           {/* CTA */}
           <div className="certs-cta">

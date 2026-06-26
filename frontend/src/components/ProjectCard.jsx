@@ -1,5 +1,4 @@
 import './ProjectCard.css';
-import { API_ORIGIN } from '../api/client';
 
 const DIFFICULTY_COLORS = {
   Easy: '#4DD9C0',
@@ -8,11 +7,9 @@ const DIFFICULTY_COLORS = {
 };
 
 function getImageSrc(project) {
-  if (project.imagePath) {
-    const cleanPath = String(project.imagePath).replace(/^\/+/, '');
-    return `${API_ORIGIN}/${cleanPath}`;
-  }
+  if (project.imagePath) return project.imagePath;
   if (project.imageUrl) return project.imageUrl;
+  if (project.image) return project.image;
   return null;
 }
 

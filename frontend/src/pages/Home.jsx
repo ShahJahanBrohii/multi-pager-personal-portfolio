@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
-import { getContentOverview, getProjects } from '../api/client';
+import { projectsData } from '../data/projects';
+import { contentOverviewData } from '../data/content';
 import './Home.css';
 
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
@@ -33,8 +34,8 @@ function useTypewriter(words, speed = 78, pause = 2100) {
 }
 
 export default function Home() {
-  const [projects, setProjects] = useState([]);
-  const [content, setContent] = useState(null);
+  const [projects] = useState(projectsData);
+  const [content] = useState(contentOverviewData);
   const words = content?.heroRoles?.length ? content.heroRoles : ['Backend Developer', 'ML Enthusiast'];
   const typed = useTypewriter(words);
   const top3 = projects.slice(0, 3);
@@ -45,24 +46,6 @@ export default function Home() {
     { v: String(content?.stats?.technologies || 0), l: 'Technologies' },
   ];
   const stack = content?.stack || [];
-
-  useEffect(() => {
-    let mounted = true;
-    Promise.all([getProjects(), getContentOverview()])
-      .then(([projectRes, contentRes]) => {
-        if (!mounted) return;
-        setProjects(projectRes.data || []);
-        setContent(contentRes.data || null);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setProjects([]);
-        setContent(null);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   return (
     <div className="page">

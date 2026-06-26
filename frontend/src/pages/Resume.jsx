@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getContentOverview } from '../api/client';
+import { contentOverviewData } from '../data/content';
 import './Resume.css';
 
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
@@ -30,28 +30,9 @@ const TABS = ['Skills', 'Experience', 'Education', 'Timeline'];
 
 export default function Resume() {
   const [tab, setTab] = useState('Skills');
-  const [content, setContent] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [content] = useState(contentOverviewData);
 
-  useEffect(() => {
-    let mounted = true;
-    getContentOverview()
-      .then((res) => {
-        if (mounted) setContent(res.data || null);
-      })
-      .catch(() => {
-        if (mounted) setContent(null);
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const skills = content?.skills || {};
+  const skills = content?.skills || { 'Backend': ['Python', 'Node.js'], 'ML': ['TensorFlow', 'PyTorch'] };
   const resume = content?.resume || { experience: [], education: [] };
   const timeline = content?.timeline || [];
 
@@ -101,7 +82,6 @@ export default function Resume() {
           {/* ─ Skills panel ─ */}
           {tab === 'Skills' && (
             <div className="res-panel fi">
-              {loading && <p style={{ color: 'var(--text2)' }}>Loading skills...</p>}
               {Object.entries(skills).map(([cat, items]) => (
                 <div key={cat} className="skills-group">
                   <h3 className="skills-group__hd">{cat}</h3>
@@ -112,14 +92,13 @@ export default function Resume() {
                   </div>
                 </div>
               ))}
-              {!loading && Object.keys(skills).length === 0 && <p style={{ color: 'var(--text2)' }}>No skills data available yet.</p>}
+              {Object.keys(skills).length === 0 && <p style={{ color: 'var(--text2)' }}>No skills data available yet.</p>}
             </div>
           )}
 
           {/* ─ Experience panel ─ */}
           {tab === 'Experience' && (
             <div className="res-panel fi">
-              {loading && <p style={{ color: 'var(--text2)' }}>Loading experience...</p>}
               {resume.experience.map((ex, i) => (
                 <div key={i} className="res-entry card">
                   <div className="res-entry__hd">
@@ -136,14 +115,13 @@ export default function Resume() {
                   </ul>
                 </div>
               ))}
-              {!loading && resume.experience.length === 0 && <p style={{ color: 'var(--text2)' }}>No experience data available yet.</p>}
+              {resume.experience.length === 0 && <p style={{ color: 'var(--text2)' }}>No experience data available yet.</p>}
             </div>
           )}
 
           {/* ─ Education panel ─ */}
           {tab === 'Education' && (
             <div className="res-panel fi">
-              {loading && <p style={{ color: 'var(--text2)' }}>Loading education...</p>}
               {resume.education.map((ed, i) => (
                 <div key={i} className="res-entry card">
                   <div className="res-entry__hd">
@@ -164,14 +142,13 @@ export default function Resume() {
                   </ul>
                 </div>
               ))}
-              {!loading && resume.education.length === 0 && <p style={{ color: 'var(--text2)' }}>No education data available yet.</p>}
+              {resume.education.length === 0 && <p style={{ color: 'var(--text2)' }}>No education data available yet.</p>}
             </div>
           )}
 
           {/* ─ Timeline panel ─ */}
           {tab === 'Timeline' && (
             <div className="res-panel fi">
-              {loading && <p style={{ color: 'var(--text2)' }}>Loading timeline...</p>}
               <div className="timeline">
                 {timeline.map((item, i) => (
                   <div key={i} className="timeline__item">
@@ -187,7 +164,7 @@ export default function Resume() {
                   </div>
                 ))}
               </div>
-              {!loading && timeline.length === 0 && <p style={{ color: 'var(--text2)' }}>No timeline data available yet.</p>}
+              {timeline.length === 0 && <p style={{ color: 'var(--text2)' }}>No timeline data available yet.</p>}
             </div>
           )}
 

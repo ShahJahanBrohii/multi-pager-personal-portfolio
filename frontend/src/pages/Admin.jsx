@@ -29,6 +29,7 @@ const certBlank = {
   issuer: "",
   year: "",
   tag: "",
+  category: "Courses",
   desc: "",
 };
 
@@ -168,6 +169,7 @@ export default function Admin() {
       issuer: certificate.issuer || "",
       year: certificate.year || "",
       tag: certificate.tag || "",
+      category: certificate.category || "Courses",
       desc: certificate.desc || "",
     });
     setCertImage(null);
@@ -261,6 +263,14 @@ export default function Admin() {
                 <input value={certForm.issuer} onChange={(e) => setCertForm({ ...certForm, issuer: e.target.value })} placeholder="Issuer" required />
                 <input value={certForm.year} onChange={(e) => setCertForm({ ...certForm, year: e.target.value })} placeholder="Year" required />
                 <input value={certForm.tag} onChange={(e) => setCertForm({ ...certForm, tag: e.target.value })} placeholder="Tag" required />
+                <select value={certForm.category} onChange={(e) => setCertForm({ ...certForm, category: e.target.value })}>
+                  <option>Courses</option>
+                  <option>Workshops</option>
+                  <option>Webinars/Sessions</option>
+                  <option>Writing</option>
+                  <option>Internships</option>
+                  <option>Volunteering</option>
+                </select>
                 <textarea value={certForm.desc} onChange={(e) => setCertForm({ ...certForm, desc: e.target.value })} placeholder="Short description" rows={4} />
                 <input type="file" accept="image/*" onChange={(e) => setCertImage(e.target.files?.[0] || null)} required={!editingCertId} />
                 <button disabled={busy} className="btn btn-amber" type="submit">{editingCertId ? "Update Certificate" : "Save Certificate"}</button>

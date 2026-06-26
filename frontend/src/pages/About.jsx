@@ -1,26 +1,11 @@
-import { useEffect, useState } from 'react';
-import { getContentOverview } from '../api/client';
+import { useState } from 'react';
+import { contentOverviewData } from '../data/content';
 import './About.css';
 
 export default function About() {
-  const [content, setContent] = useState(null);
+  const [content] = useState(contentOverviewData);
 
-  useEffect(() => {
-    let mounted = true;
-    getContentOverview()
-      .then((res) => {
-        if (mounted) setContent(res.data || null);
-      })
-      .catch(() => {
-        if (mounted) setContent(null);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const topTags = content?.highlights?.topTags || [];
+  const topTags = content?.highlights?.topTags || ['Machine Learning', 'Backend Development', 'Data Engineering'];
   const topIssuers = content?.highlights?.issuers || [];
   const stack = content?.stack || [];
   const timeline = content?.timeline || [];

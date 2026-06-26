@@ -3,18 +3,18 @@
 
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root {
-  --ink:         #0A0E27;
-  --ink2:        #0F1535;
-  --ink3:        #131D42;
-  --ink4:        #1A2555;
-  --ink5:        #212E6B;
+  --ink:         white;
+  --ink2:        white;
+  --ink3:        white;
+  --ink4:        white;
+  --ink5:        white;
 
   --wire:        rgba(0,217,255,0.08);
   --wire2:       rgba(0,217,255,0.25);
 
-  --text:        #F0F4FF;
-  --text2:       #B4BFFF;
-  --text3:       #7A8FFF;
+  --text:        black;
+  --text2:       black;
+  --text3:       black;
 
   --amber:       #00D9FF;
   --amber2:      #00A8CC;
