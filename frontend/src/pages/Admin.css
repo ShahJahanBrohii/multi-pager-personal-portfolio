@@ -35,10 +35,19 @@
   color: var(--text);
   border-radius: 8px;
   padding: 10px;
+  font: inherit;
+}
+
+.admin-card input:focus,
+.admin-card textarea:focus,
+.admin-card select:focus {
+  outline: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px var(--amber-dim);
 }
 
 .admin-err {
-  color: #ff7b7b;
+  color: var(--error);
 }
 
 .admin-note {

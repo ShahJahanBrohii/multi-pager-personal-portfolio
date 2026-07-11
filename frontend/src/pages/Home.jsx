@@ -119,7 +119,7 @@ export default function Home() {
       <div className="marquee-wrap">
         <div className="marquee-track">
           {[...stack, ...stack].map((s, i) => (
-            <span key={i} className="marquee-item">{s}</span>
+            <span key={i} className="marquee-item">{s.name}</span>
           ))}
           {stack.length === 0 && <span className="marquee-item">No technologies available yet</span>}
         </div>

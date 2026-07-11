@@ -75,7 +75,7 @@ export default function About() {
           <div className="about-philo">
             {[
               { icon: '⚡', title: 'Top Domains', body: topTags.length ? topTags.join(', ') : 'No domains available yet.' },
-              { icon: '🧠', title: 'Tech Coverage', body: stack.length ? `${stack.slice(0, 8).join(', ')}${stack.length > 8 ? '...' : ''}` : 'No technologies available yet.' },
+              { icon: '🧠', title: 'Tech Coverage', body: stack.length ? `${stack.slice(0, 8).map(s => s.name).join(', ')}${stack.length > 8 ? '...' : ''}` : 'No technologies available yet.' },
               { icon: '🔒', title: 'Credential Sources', body: topIssuers.length ? topIssuers.slice(0, 3).join(', ') : 'No certification issuers available yet.' },
               { icon: '📐', title: 'Live Data Mode', body: 'Projects, certifications, skills, and timeline are now backend-driven in real time.' },
             ].map(({ icon, title, body }) => (
@@ -97,7 +97,7 @@ export default function About() {
         <div className="about-marquee__track">
           <div className="about-marquee__inner">
             {[...stack, ...stack].map((s, i) => (
-              <span key={i} className="marquee-item">{s}</span>
+              <span key={i} className="marquee-item">{s.name}</span>
             ))}
             {stack.length === 0 && <span className="marquee-item">No technologies available yet</span>}
           </div>

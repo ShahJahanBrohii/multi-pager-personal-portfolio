@@ -9,21 +9,21 @@
   padding: 80px 0 64px;
 }
 
-/* ambient glow */
+/* ambient texture — subtle, not neon */
 .hero__blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(90px);
   pointer-events: none;
 }
 .hero__blob--a {
   width: 560px; height: 560px;
-  background: rgba(245,166,35,0.07);
+  background: var(--amber-glow);
   top: -120px; left: -80px;
 }
 .hero__blob--b {
   width: 420px; height: 420px;
-  background: rgba(77,217,192,0.06);
+  background: rgba(74,107,94,0.05);
   bottom: -60px; right: -40px;
 }
 
@@ -39,10 +39,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--amber);
-  border: 1px solid rgba(245,166,35,0.28);
-  background: rgba(245,166,35,0.07);
+  border: 1px solid var(--amber-dim);
+  background: var(--amber-glow);
   padding: 5px 14px;
   border-radius: 100px;
   width: fit-content;
@@ -57,14 +57,14 @@
 
 /* name */
 .hero__name {
-  font-size: clamp(52px, 8.5vw, 96px);
-  line-height: 0.92;
+  font-size: clamp(48px, 7.5vw, 84px);
+  line-height: 0.98;
   color: var(--text);
+  font-weight: 700;
 }
 .hero__name em {
   font-style: normal;
   color: var(--amber);
-  /* subtle amber underline */
   background: linear-gradient(to right, var(--amber) 0%, var(--amber2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -73,9 +73,10 @@
 
 /* typewriter line */
 .hero__typed {
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(14px, 2vw, 19px);
   color: var(--text2);
   min-height: 28px;
+  font-family: var(--font-mono);
 }
 .hero__prefix { color: var(--text3); user-select: none; }
 .hero__cursor {
@@ -86,12 +87,12 @@
 
 /* bio */
 .hero__bio {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text2);
-  line-height: 1.9;
+  line-height: 1.85;
   max-width: 580px;
 }
-.hero__bio strong { color: var(--text); font-weight: 500; }
+.hero__bio strong { color: var(--text); font-weight: 600; }
 
 /* CTA row */
 .hero__cta {
@@ -111,15 +112,15 @@
 .hero__stat { display: flex; flex-direction: column; gap: 2px; }
 .hero__stat-v {
   font-family: var(--font-head);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text);
   line-height: 1;
 }
 .hero__stat-l {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
   color: var(--text2);
 }
 
@@ -134,14 +135,14 @@
   align-items: center;
   gap: 8px;
   color: var(--text3);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: none;
 }
 .hero__scroll-bar {
-  width: 1px; height: 40px;
+  width: 1px; height: 36px;
   background: linear-gradient(to bottom, var(--amber), transparent);
-  animation: float 2.2s ease-in-out infinite;
+  animation: float 2.4s ease-in-out infinite;
 }
 
 /* ══ MARQUEE ════════════════════════════════════════════════ */
@@ -172,7 +173,7 @@
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marqLeft 30s linear infinite;
+  animation: marqLeft 34s linear infinite;
 }
 .marquee-item {
   padding: 5px 20px;
@@ -180,7 +181,7 @@
   border: 1px solid var(--wire);
   border-radius: 6px;
   background: var(--ink3);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text2);
   white-space: nowrap;
 }

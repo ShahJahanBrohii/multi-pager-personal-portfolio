@@ -28,7 +28,7 @@
   border: 1px solid var(--wire);
   background: var(--ink2);
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text2);
   cursor: pointer;
   transition: all 0.2s;
@@ -39,7 +39,7 @@
   border-color: var(--amber) !important;
   color: var(--amber) !important;
 }
-.port-showing { font-size: 12px; color: var(--text2); }
+.port-showing { font-size: 13px; color: var(--text2); }
 .port-showing strong { color: var(--text); }
 
 /* Grid */
