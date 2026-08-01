@@ -55,6 +55,14 @@
   color: var(--amber) !important;
   background: var(--amber-dim) !important;
 }
+.nav__link:focus-visible,
+.nav__logo:focus-visible,
+.nav__ham:focus-visible,
+.nav__drawer-link:focus-visible,
+.nav__cta:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
 
 /* CTA */
 .nav__cta { font-size: 12px !important; padding: 7px 16px !important; }

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const LINKS = [
@@ -15,12 +14,33 @@ const LINKS = [
 export default function Navbar() {
   const [solid,  setSolid]  = useState(false);
   const [open,   setOpen]   = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 20);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    if (!open) return undefined;
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   return (
     <>
@@ -51,7 +71,6 @@ export default function Navbar() {
 
           {/* Social CTAs */}
           <div className="nav__actions hide-sm" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <ThemeToggle />
             <a
               href="https://github.com/ShahJahanBrohii"
               target="_blank" rel="noreferrer"
@@ -78,9 +97,12 @@ export default function Navbar() {
 
           {/* Hamburger */}
           <button
+            type="button"
             className={`nav__ham${open ? ' open' : ''}`}
             onClick={() => setOpen(o => !o)}
-            aria-label="Toggle menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-navigation-drawer"
           >
             <span /><span /><span />
           </button>
@@ -88,7 +110,11 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile drawer */}
-      <div className={`nav__drawer${open ? ' nav__drawer--open' : ''}`}>
+      <div
+        id="mobile-navigation-drawer"
+        className={`nav__drawer${open ? ' nav__drawer--open' : ''}`}
+        aria-hidden={!open}
+      >
         {LINKS.map(({ to, label }) => (
           <NavLink
             key={to}
@@ -129,7 +155,7 @@ export default function Navbar() {
             </a>
         </div>
       </div>
-      {open && <div className="nav__overlay" onClick={() => setOpen(false)} />}
+      {open && <div className="nav__overlay" onClick={() => setOpen(false)} aria-hidden="true" />}
     </>
   );
 }

@@ -37,34 +37,6 @@
   --max-w:       1140px;
 }
 
-/* ── DARK MODE (kept for optional toggle) ──────────────────── */
-:root[data-theme="dark"] {
-  --ink:         #171715;
-  --ink2:        #1E1E1B;
-  --ink3:        #262622;
-  --ink4:        #2E2E2A;
-  --ink5:        #3A3A35;
-
-  --wire:        rgba(255,255,255,0.06);
-  --wire2:       rgba(255,255,255,0.14);
-
-  --text:        #EDEDE9;
-  --text2:       #B0B0A9;
-  --text3:       #7D7D77;
-
-  --amber:       #7F9CB6;
-  --amber2:      #97B0C6;
-  --amber-dim:   rgba(127,156,182,0.14);
-  --amber-glow:  rgba(127,156,182,0.08);
-
-  --teal:        #7FA091;
-  --rose:        #B08983;
-  --violet:      #9694B3;
-  --error:       #E5766B;
-  --error-bg:    rgba(229,118,107,0.12);
-  --error-border: rgba(229,118,107,0.35);
-}
-
 /* ── RESET ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 15px; }
