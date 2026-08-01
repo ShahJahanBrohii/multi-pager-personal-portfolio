@@ -30,11 +30,11 @@ const TABS = ['Skills', 'Experience', 'Education', 'Timeline'];
 
 export default function Resume() {
   const [tab, setTab] = useState('Skills');
-  const [content] = useState(contentOverviewData);
+  const content = contentOverviewData;
 
-  const skills = content?.skills || { 'Backend': ['Python', 'Node.js'], 'ML': ['TensorFlow', 'PyTorch'] };
-  const resume = content?.resume || { experience: [], education: [] };
-  const timeline = content?.timeline || [];
+  const skills = content.skills || {};
+  const resume = content.resume || { experience: [], education: [] };
+  const timeline = content.timeline || [];
 
   return (
     <div className="page">

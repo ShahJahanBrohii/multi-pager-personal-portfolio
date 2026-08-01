@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { contentOverviewData } from '../data/content';
 import './About.css';
 
 export default function About() {
-  const [content] = useState(contentOverviewData);
+  const content = contentOverviewData;
 
   const topTags = content?.highlights?.topTags || ['Machine Learning', 'Backend Development', 'Data Engineering'];
-  const topIssuers = content?.highlights?.issuers || [];
+  const topIssuers = content?.highlights?.credentialCategories || [];
   const stack = content?.stack || [];
   const timeline = content?.timeline || [];
 
@@ -19,7 +18,7 @@ export default function About() {
           <p className="sec-eyebrow fu">About</p>
           <h1 className="sec-title fu d1">The <em>Story</em> So Far</h1>
           <p className="sec-sub fu d2">
-            This page now reflects live backend data for skills, tags, certifications, and timeline milestones.
+            This page now reflects the shared portfolio data for skills, tags, certifications, and timeline milestones.
           </p>
         </div>
       </section>
@@ -41,27 +40,27 @@ export default function About() {
             <div className="about-body">
               <p>
                 This portfolio is powered by a live backend API. It currently tracks
-                <strong> {content?.stats?.projects || 0} projects</strong> and
-                <strong> {content?.stats?.certificates || 0} certifications</strong>.
+                <strong> {content.stats.projects} projects</strong> and
+                <strong> {content.stats.certificates} certifications</strong>.
               </p>
               <p>
                 Top domains from the database include
                 <strong> {topTags.length ? topTags.join(', ') : 'no tags yet'}</strong>, with
-                <strong> {content?.stats?.technologies || 0} technologies</strong> mapped from
+                <strong> {content.stats.technologies} technologies</strong> mapped from
                 project records.
               </p>
               <p>
-                As new projects and certificates are created in the backend, this page updates
-                automatically without editing frontend arrays.
+                As new projects and certificates are added to the shared data files, this page updates
+                automatically without editing the page itself.
               </p>
             </div>
 
             <div className="about-meta">
               {[
-                ['Projects', String(content?.stats?.projects || 0)],
-                ['Certificates', String(content?.stats?.certificates || 0)],
-                ['Domains', String(content?.stats?.tags || 0)],
-                ['Technologies', String(content?.stats?.technologies || 0)],
+                ['Projects', String(content.stats.projects)],
+                ['Certificates', String(content.stats.certificates)],
+                ['Domains', String(content.stats.tags)],
+                ['Technologies', String(content.stats.technologies)],
               ].map(([k, v]) => (
                 <div key={k} className="about-meta__row">
                   <span className="about-meta__key">{k}</span>
@@ -76,8 +75,8 @@ export default function About() {
             {[
               { icon: '⚡', title: 'Top Domains', body: topTags.length ? topTags.join(', ') : 'No domains available yet.' },
               { icon: '🧠', title: 'Tech Coverage', body: stack.length ? `${stack.slice(0, 8).map(s => s.name).join(', ')}${stack.length > 8 ? '...' : ''}` : 'No technologies available yet.' },
-              { icon: '🔒', title: 'Credential Sources', body: topIssuers.length ? topIssuers.slice(0, 3).join(', ') : 'No certification issuers available yet.' },
-              { icon: '📐', title: 'Live Data Mode', body: 'Projects, certifications, skills, and timeline are now backend-driven in real time.' },
+              { icon: '🔒', title: 'Credential Sources', body: topIssuers.length ? topIssuers.slice(0, 3).join(', ') : 'No certification categories available yet.' },
+              { icon: '📐', title: 'Shared Data Mode', body: 'Projects, certifications, skills, and timeline are now driven from shared local data.' },
             ].map(({ icon, title, body }) => (
               <div key={title} className="philo-card card">
                 <span className="philo-icon">{icon}</span>
@@ -110,7 +109,7 @@ export default function About() {
           <p className="sec-eyebrow">Journey</p>
           <h2 className="sec-title">ML <em>Timeline</em></h2>
           <p className="sec-sub" style={{ marginBottom: 60 }}>
-            A live timeline generated from recent projects and certifications in MongoDB.
+            A shared timeline generated from recent projects and certifications in the portfolio data.
           </p>
 
           <div className="timeline">
