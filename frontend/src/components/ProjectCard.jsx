@@ -6,6 +6,16 @@ const DIFFICULTY_COLORS = {
   Hard: '#F56E6E',
 };
 
+const TAG_ACCENTS = {
+  AI: 'var(--amber)',
+  CV: 'var(--rose)',
+  ML: 'var(--amber)',
+  Web: 'var(--teal)',
+  Python: 'var(--violet)',
+  Java: 'var(--teal)',
+  Data: 'var(--rose)',
+};
+
 function getImageSrc(project) {
   if (project.imagePath) return project.imagePath;
   if (project.imageUrl) return project.imageUrl;
@@ -16,11 +26,12 @@ function getImageSrc(project) {
 export default function ProjectCard({ project, featured = false }) {
   const { title, desc, tag, tech, github, archLink, accent, difficulty } = project;
   const imageSrc = getImageSrc(project);
+  const cardAccent = accent || TAG_ACCENTS[tag] || 'var(--amber)';
 
   return (
     <article className={`pcard card${featured ? ' pcard--featured' : ''}`}>
       {/* coloured top stripe */}
-      <div className="pcard__stripe" style={{ background: accent }} />
+      <div className="pcard__stripe" style={{ background: cardAccent }} />
 
       {/* ── Screenshot thumbnail ── */}
       {imageSrc && (
@@ -43,7 +54,7 @@ export default function ProjectCard({ project, featured = false }) {
           <div className="pcard__tags">
             <span
               className="pcard__tag"
-              style={{ color: accent, borderColor: `${accent}40`, background: `${accent}12` }}
+              style={{ color: cardAccent, borderColor: `${cardAccent}40`, background: `${cardAccent}12` }}
             >
               {tag}
             </span>
