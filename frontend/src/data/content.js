@@ -72,6 +72,13 @@ const timeline = [
     color: '#2F80ED',
   },
   {
+    year: '2025',
+    tag: 'Internship',
+    title: 'Frontend Developer Intern at High Tech Software House and Training Center',
+    body: 'Completed a frontend developer internship from June to August 2025, focusing on responsive UI work and implementation details.',
+    color: '#F2994A',
+  },
+  {
     year: '2026',
     tag: 'Internship',
     title: 'ML Engineering Intern at FlyRank',
@@ -96,6 +103,14 @@ export const contentOverviewData = {
         bullets: [
           'Working on applied machine learning workflows and portfolio-level implementation details.',
           'Building production-minded AI and backend projects with a focus on practical delivery.',
+        ],
+      },
+      {
+        role: 'Frontend Developer Intern',
+        company: 'High Tech Software House and Training Center',
+        period: 'Jun 2025 - Aug 2025',
+        bullets: [
+          'Built and refined frontend features during the internship period with a focus on responsive UI work.',
         ],
       },
     ],
