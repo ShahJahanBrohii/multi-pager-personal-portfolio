@@ -47,7 +47,6 @@ export default function Footer() {
         <div className="footer__section footer__resources">
           <h4 className="footer__section-title">Resources</h4>
           <ul className="footer__links-list">
-            <li><a href="/sitemap.xml" className="footer__link">Sitemap</a></li>
             <li><a href="https://github.com/ShahJahanBrohii" target="_blank" rel="noreferrer" className="footer__link">GitHub ↗</a></li>
             <li><a href="https://www.kaggle.com/shahjahanabdullatif" target="_blank" rel="noreferrer" className="footer__link">Kaggle ↗</a></li>
             {RESUME_URL && <li><a href={RESUME_URL} className="footer__link">Resume</a></li>}
