@@ -1,6 +1,68 @@
 // Portfolio content & overview data
 import { projectsData } from './projects';
 import { certificatesData } from './certificates';
+import FlyRankCert from '../images/certificates/flyrank-certificate-of-completion-machine-learning.jpg';
+import SafeXCert from '../images/certificates/safeX-AIML.jpeg';
+import InternshipFrontend from '../images/certificates/internshipfrontend.jpg';
+
+export const internshipsData = [
+  {
+    id: 'flyrank',
+    role: 'Machine Learning Engineering Intern',
+    company: 'FlyRank Corp USA',
+    companyUrl: 'https://flyrank.ai',
+    period: 'Jul 2026 - Sep 2026',
+    badge: 'Applied AI & ML',
+    color: '#10B981',
+    location: 'Remote (USA)',
+    certImage: FlyRankCert,
+    certId: 'FR-D11-F5B4E-AD983',
+    summary: 'Applied machine learning engineering focused on AI workflows, production model experimentation, and technical competence.',
+    bullets: [
+      'Researched and integrated applied machine learning workflows for automated intelligence systems.',
+      'Assisted in data preprocessing, feature engineering, and model validation across vision and tabular datasets.',
+      'Demonstrated technical competency and collaborative delivery within a US-based AI engineering team.',
+    ],
+    skills: ['Machine Learning', 'Python', 'Model Evaluation', 'AI Workflows', 'Computer Vision'],
+  },
+  {
+    id: 'safex',
+    role: 'AI / Machine Learning Intern',
+    company: 'SafeX Solutions',
+    companyUrl: 'https://safexsolutions.com',
+    period: 'Jul 2026 - Sep 2026',
+    badge: 'Deep Learning & CV',
+    color: '#0EA5E9',
+    location: 'Remote',
+    certImage: SafeXCert,
+    certId: '#95%7@2&$41n6',
+    summary: 'Completed the intensive Skills Development Internship Program in AI/ML, focusing on neural network architectures and pipelines.',
+    bullets: [
+      'Built and evaluated machine learning models as part of the specialized Skills Development Internship Program.',
+      'Explored deep learning architectures, automated classification pipelines, and real-time inference logic.',
+      'Applied proactive problem-solving to optimize data processing and model metrics.',
+    ],
+    skills: ['AI/ML', 'PyTorch', 'Data Processing', 'Neural Networks', 'Algorithms'],
+  },
+  {
+    id: 'hightech',
+    role: 'Web Developer Intern (Frontend)',
+    company: 'High Tech Software House & Training Center',
+    period: 'Jun 2025 - Aug 2025',
+    badge: 'Frontend Engineering',
+    color: '#F59E0B',
+    location: 'Nawabshah / Hybrid',
+    certImage: InternshipFrontend,
+    certId: 'HTSH-Z555565-25-1744',
+    summary: 'Completed a 2-month professional web development internship under Pakistan Software Export Board (PSEB) registration.',
+    bullets: [
+      'Engineered modular, responsive user interface components using modern web standards.',
+      'Improved client-facing page loading speeds and cross-browser consistency across mobile and desktop devices.',
+      'Worked closely with senior developers following agile practices and clean code conventions.',
+    ],
+    skills: ['React', 'JavaScript', 'HTML5/CSS3', 'Responsive Design', 'PSEB Certified'],
+  },
+];
 
 const stack = [
   { name: 'Python', level: 'Expert' },
@@ -9,6 +71,9 @@ const stack = [
   { name: 'TensorFlow', level: 'Advanced' },
   { name: 'MongoDB', level: 'Intermediate' },
   { name: 'Docker', level: 'Intermediate' },
+  { name: 'PyTorch', level: 'Advanced' },
+  { name: 'OpenCV', level: 'Advanced' },
+  { name: 'FastAPI', level: 'Advanced' },
 ];
 
 function countBy(items, getter) {
@@ -58,59 +123,77 @@ const skills = {
 
 const timeline = [
   {
+    year: '2022 - 2026',
+    tag: 'Education',
+    title: 'BSc Computer Science at Sukkur IBA University',
+    body: 'Academic focus on Data Structures, Algorithms, Machine Learning, Computer Vision, and Software Engineering.',
+    color: '#3B82F6',
+  },
+  {
     year: '2024',
-    tag: 'Certificates',
-    title: 'Built a certification base',
-    body: 'Collected writing, workshop, webinar, and volunteering credentials while expanding practical skills.',
+    tag: 'Certifications',
+    title: 'Built Comprehensive AI & Technical Foundation',
+    body: 'Earned specialized credentials across Generative AI, Data Science, Data Visualization, and Executive Technical Writing.',
     color: '#8E6CFF',
   },
   {
     year: '2025',
-    tag: 'Projects',
-    title: 'Expanded the AI and web portfolio',
-    body: 'Shipped multiple computer vision, ML, and frontend projects alongside internships and practice repos.',
-    color: '#2F80ED',
-  },
-  {
-    year: '2025',
     tag: 'Internship',
-    title: 'Frontend Developer Intern at High Tech Software House and Training Center',
-    body: 'Completed a frontend developer internship from June to August 2025, focusing on responsive UI work and implementation details.',
-    color: '#F2994A',
+    title: 'Web Developer Intern at High Tech Software House',
+    body: 'Completed 2-month PSEB-registered internship engineering responsive frontend interfaces and client deliverables.',
+    color: '#F59E0B',
   },
   {
     year: '2026',
     tag: 'Internship',
-    title: 'ML Engineering Intern at FlyRank',
-    body: 'Focused on applied machine learning and production engineering while keeping the portfolio active.',
-    color: '#27AE60',
+    title: 'AI / ML Intern at SafeX Solutions',
+    body: 'Hands-on Skills Development Internship Program implementing deep learning pipelines and predictive models.',
+    color: '#0EA5E9',
+  },
+  {
+    year: '2026',
+    tag: 'Internship',
+    title: 'Machine Learning Intern at FlyRank Corp USA',
+    body: 'Applied machine learning engineering, production AI workflows, and model architecture evaluation.',
+    color: '#10B981',
   },
 ];
 
 export const contentOverviewData = {
-  heroRoles: ['Backend Developer', 'ML Enthusiast', 'Data Engineer'],
+  heroRoles: ['Machine Learning Engineer', 'AI Specialist', 'Backend Developer'],
   highlights: {
     topTags: topKeys(projectsData, (project) => project.tag),
     credentialCategories: certificateCategories,
   },
+  internships: internshipsData,
   skills,
   resume: {
     experience: [
       {
-        role: 'ML Engineering Intern',
+        role: 'Machine Learning Engineering Intern',
         company: 'FlyRank Corp USA',
-        period: '2026 - Present',
+        period: 'Jul 2026 - Sep 2026',
         bullets: [
-          'Working on applied machine learning workflows and portfolio-level implementation details.',
-          'Building production-minded AI and backend projects with a focus on practical delivery.',
+          'Worked on applied machine learning workflows and production-level model evaluations.',
+          'Researched and integrated data preprocessing and inference pipelines within an agile AI engineering team.',
         ],
       },
       {
-        role: 'Frontend Developer Intern',
-        company: 'High Tech Software House and Training Center',
+        role: 'AI / Machine Learning Intern',
+        company: 'SafeX Solutions',
+        period: 'Jul 2026 - Sep 2026',
+        bullets: [
+          'Completed the Skills Development Internship Program focusing on artificial intelligence and neural networks.',
+          'Developed machine learning pipelines for automated predictive and classification tasks.',
+        ],
+      },
+      {
+        role: 'Web Developer Intern (Frontend)',
+        company: 'High Tech Software House & Training Center',
         period: 'Jun 2025 - Aug 2025',
         bullets: [
-          'Built and refined frontend features during the internship period with a focus on responsive UI work.',
+          'Delivered responsive web interfaces and modular frontend components under PSEB standards.',
+          'Maintained high code quality, accessibility, and client-centric usability standards.',
         ],
       },
     ],
@@ -121,8 +204,8 @@ export const contentOverviewData = {
         period: '2022 - 2026',
         gpa: '3.27 / 4.00',
         notes: [
-          'Focused on AI/ML, backend engineering, and full-stack project work.',
-          'Built a portfolio of computer vision, web, and automation projects.',
+          'Focused on AI/ML, computer vision, backend engineering, and distributed systems.',
+          'Built an extensive portfolio of computer vision, deep learning, and web development projects.',
         ],
       },
     ],
