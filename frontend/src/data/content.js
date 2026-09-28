@@ -1,4 +1,4 @@
-// Mock content/overview data
+// Portfolio content & overview data
 import { projectsData } from './projects';
 import { certificatesData } from './certificates';
 

@@ -16,15 +16,17 @@ export default function Navbar() {
   const [open,   setOpen]   = useState(false);
   const location = useLocation();
 
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
+    setOpen(false);
+  }
+
   useEffect(() => {
     const fn = () => setSolid(window.scrollY > 20);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {

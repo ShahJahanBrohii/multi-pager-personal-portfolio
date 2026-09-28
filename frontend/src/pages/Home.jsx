@@ -77,9 +77,9 @@ export default function Home() {
 
           {/* bio */}
           <p className="hero__bio fu d4">
-            Live portfolio powered by backend APIs with <strong>{content?.stats?.projects || 0} projects</strong>
-            and <strong> {content?.stats?.certificates || 0} certifications</strong>. Content updates in real time
-            as your backend data changes.
+            Computer Science student and ML Engineer focused on computer vision, deep learning,
+            and building high-performance web applications. Featuring <strong>{content?.stats?.projects || 0} projects</strong>
+            and <strong>{content?.stats?.certificates || 0} certifications</strong>.
           </p>
 
           {/* cta row */}

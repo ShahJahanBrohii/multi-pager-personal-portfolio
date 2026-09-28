@@ -39,19 +39,14 @@ export default function About() {
 
             <div className="about-body">
               <p>
-                This portfolio is powered by a live backend API. It currently tracks
-                <strong> {content.stats.projects} projects</strong> and
-                <strong> {content.stats.certificates} certifications</strong>.
+                Computer Science student at Sukkur IBA University and Machine Learning Engineering Intern at FlyRank Corp USA.
+                This portfolio showcases <strong>{content.stats.projects} projects</strong> and <strong>{content.stats.certificates} certifications</strong> across machine learning, computer vision, and modern web engineering.
               </p>
               <p>
-                Top domains from the database include
-                <strong> {topTags.length ? topTags.join(', ') : 'no tags yet'}</strong>, with
-                <strong> {content.stats.technologies} technologies</strong> mapped from
-                project records.
+                Key domains include <strong>{topTags.length ? topTags.join(', ') : 'Machine Learning & Web Engineering'}</strong>, spanning <strong>{content.stats.technologies} technologies</strong> and developer tools.
               </p>
               <p>
-                As new projects and certificates are added to the shared data files, this page updates
-                automatically without editing the page itself.
+                Passionate about applied AI, object detection pipelines, and delivering clean, end-to-end software solutions.
               </p>
             </div>
 

@@ -1,151 +1,123 @@
-# Multi-Page Portfolio
+# Multi-Page Personal Portfolio
 
-A responsive multi-page portfolio app with a React/Vite frontend and an Express/MongoDB backend.
+A sleek, responsive multi-page personal portfolio web application built with **React 19**, **Vite**, and modern CSS styling.
 
-## Overview
+Designed to showcase machine learning, computer vision, backend engineering, and web development projects, credentials, and experience.
 
-- Public site pages for Home, About, Portfolio, Resume, Certifications, and Contact.
-- Admin dashboard for creating, editing, and deleting projects and certificates.
-- Backend-powered content overview for stats, skills, timeline, and resume sections.
-- Social links for GitHub, LinkedIn, and Kaggle.
-- Responsive layout tuned for mobile, tablet, and desktop.
+---
 
-## Tech Stack
+## 🌟 Pages & Features
 
-- Frontend: React 19, React Router, Vite
-- Backend: Node.js, Express, Mongoose, MongoDB
-- Media: Multer uploads served from `/uploads`
+- **Home (`/`)**: Hero section with typewriter role animation, real-time portfolio statistics, top featured projects, and core tech stack badges.
+- **About (`/about`)**: Personal background, domain competencies, interactive categorized skills progress bars (Core, AI/ML, Backend, Tools), and career journey timeline.
+- **Portfolio (`/portfolio`)**: Filterable project showcase with category tags (ML, Backend, Web, etc.), difficulty tags, technology chips, architecture links, and direct GitHub links.
+- **Resume (`/resume`)**: Detailed breakdown of experience, education, GPA, technical proficiencies, and an optional one-click PDF resume download button.
+- **Certifications (`/certifications`)**: Filterable credentials gallery categorized by Courses, Workshops, Webinars, Writing, Internships, and Volunteering with image previews.
+- **Contact (`/contact`)**: Form with client-side validation, direct email launcher, and direct social links (GitHub, LinkedIn, Email).
+- **Responsive Navigation**: Fixed navbar with mobile drawer navigation, active route styling, and a floating Back-to-Top button.
 
-## Project Structure
+---
 
-- `frontend/` React app
-- `backend/` API server
-- `backend/uploads/` uploaded project and certificate images
+## 🛠️ Tech Stack
 
-## Setup
+- **Framework**: [React 19](https://react.dev/)
+- **Bundler & Dev Server**: [Vite](https://vitejs.dev/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+- **Styling**: Vanilla CSS Design System with CSS Custom Properties, supplemented by [TailwindCSS](https://tailwindcss.com/)
+- **Typography & Icons**: Modern SVG icons & web-safe / system fonts
 
-### Backend
+---
 
-1. Open `backend/`
-2. Install dependencies with `npm install`
-3. Copy `.env.example` to `.env`
-4. Fill in the required values
-5. Start the API with `npm run dev`
+## 📁 Project Structure
 
-### Frontend
+```text
+multi-page-portfolio/
+├── README.md
+└── frontend/
+    ├── index.html
+    ├── package.json
+    ├── vercel.json
+    ├── vite.config.js
+    ├── .env.example
+    └── src/
+        ├── App.jsx             # Main router and route definitions
+        ├── main.jsx            # React root mount
+        ├── index.css           # Global design system & theme variables
+        ├── components/         # Reusable UI components
+        │   ├── Navbar.jsx
+        │   ├── Footer.jsx
+        │   ├── ProjectCard.jsx
+        │   └── BackToTop.jsx
+        ├── pages/              # Site pages
+        │   ├── Home.jsx
+        │   ├── About.jsx
+        │   ├── Portfolio.jsx
+        │   ├── Resume.jsx
+        │   ├── Certifications.jsx
+        │   └── Contact.jsx
+        ├── data/               # Modular data sources
+        │   ├── projects.js     # Project entries, tags, and links
+        │   ├── certificates.js # Credentials, categories, and images
+        │   └── content.js      # Bio, stats, skills, timeline, and resume
+        └── images/             # Static image assets and certificate media
+```
 
-1. Open `frontend/`
-2. Install dependencies with `npm install`
-3. Set frontend environment variables in `.env`
-4. Start the app with `npm run dev`
+---
 
-## Deployment (Vercel + Render)
+## 🚀 Getting Started
 
-### Backend on Render
+### Prerequisites
 
-1. Create a new Web Service in Render from this repository.
-2. Set Root Directory to `backend`.
-3. Build Command: `npm install`
-4. Start Command: `npm start`
-5. Health Check Path: `/api/health`
-6. Add environment variables:
-	- `MONGODB_URI`
-	- `JWT_SECRET`
-	- `ADMIN_EMAIL`
-	- `ADMIN_PASSWORD`
-	- `PORT` (optional; Render provides this automatically)
-	- `JWT_EXPIRES_IN` (optional)
-	- `MAX_FILE_SIZE_MB` (optional)
-	- `CORS_ORIGIN` as comma-separated origins, for example:
-	  - `https://your-frontend.vercel.app,https://your-frontend-git-main-yourteam.vercel.app`
+- [Node.js](https://nodejs.org/) (version 18 or newer recommended)
+- `npm` (bundled with Node.js)
 
-### Frontend on Vercel
+### Installation & Local Development
 
+1. Navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. (Optional) Set up environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   *Set `VITE_RESUME_URL` if you want the "Download Resume" buttons to link to an external PDF or hosted file.*
+
+4. Start the local development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+## 📦 Available Scripts
+
+From the `frontend` directory, you can run:
+
+- `npm run dev` — Starts Vite dev server with hot module replacement (HMR).
+- `npm run build` — Compiles and minifies the app into `dist/` for production.
+- `npm run preview` — Locally previews the production build.
+- `npm run lint` — Runs ESLint across the codebase.
+
+---
+
+## 🌐 Deployment (e.g. Vercel)
+
+This frontend is a single-page application (SPA) ready for deployment on **Vercel**, **Netlify**, or **GitHub Pages**.
+
+### Deploying to Vercel:
 1. Import this repository into Vercel.
-2. Set Root Directory to `frontend`.
-3. Build Command: `npm run build`
-4. Output Directory: `dist`
-5. Add environment variables:
-	- `VITE_API_URL=https://your-render-service.onrender.com/api`
-	- `VITE_RESUME_URL` (optional)
-6. Ensure Render `CORS_ORIGIN` includes your Vercel production domain.
-
-### Notes
-
-- `frontend/vercel.json` is included for SPA rewrite support with React Router.
-- `render.yaml` is included for quick Render service setup.
-- Render disk is ephemeral, so uploaded files in `/uploads` are not permanent across deploys/restarts. Use object storage (S3/Cloudinary) for persistent media in production.
-
-## Environment Variables
-
-### Backend `backend/.env`
-
-- `PORT`
-- `MONGODB_URI`
-- `CORS_ORIGIN`
-- `MAX_FILE_SIZE_MB`
-- `JWT_SECRET`
-- `JWT_EXPIRES_IN`
-- `ADMIN_EMAIL`
-- `ADMIN_PASSWORD`
-
-### Frontend `frontend/.env`
-
-- `VITE_API_URL=https://multi-pager-personal-portfolio.onrender.com/api`
-- `VITE_RESUME_URL` optional direct URL for the resume download button
-
-## Scripts
-
-### Backend
-
-- `npm run dev` - start the API with nodemon
-- `npm start` - start the API with Node
-
-### Frontend
-
-- `npm run dev` - start the Vite dev server
-- `npm run build` - build for production
-- `npm run lint` - run ESLint
-- `npm run preview` - preview the production build
-
-## Backend Features
-
-- Public project listing defaults to published projects only
-- Project CRUD with optional image upload
-- Certificate CRUD with required image upload on create
-- Contact form storage
-- Admin JWT authentication
-- Content overview endpoint for stats, skills, timeline, and resume sections
-
-## Frontend Notes
-
-- Admin can update project and certificate details after creation
-- Resume download links only show when `VITE_RESUME_URL` is set
-- The layout is responsive across the main pages and navigation
-
-## Useful API Base URL
-
-`https://multi-pager-personal-portfolio.onrender.com/api`
-
-## Key Endpoints
-
-- `GET /api/health`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `GET /api/projects`
-- `POST /api/projects`
-- `PUT /api/projects/:id`
-- `DELETE /api/projects/:id`
-- `GET /api/certificates`
-- `POST /api/certificates`
-- `PUT /api/certificates/:id`
-- `DELETE /api/certificates/:id`
-- `GET /api/content/overview`
-- `POST /api/contact`
-- `GET /api/contact`
-
-## Notes
-
-- Uploaded files are served from `/uploads`
-- Public routes show published content by default
-- Admin routes require a valid Bearer token
+2. Set the **Root Directory** to `frontend`.
+3. Framework Preset: **Vite**.
+4. Build Command: `npm run build`.
+5. Output Directory: `dist`.
+6. (Optional) Under Environment Variables, add `VITE_RESUME_URL`.
+7. `frontend/vercel.json` is already configured for SPA rewrites.
