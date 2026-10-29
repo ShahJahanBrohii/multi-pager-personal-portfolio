@@ -1,72 +1,50 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { contentOverviewData } from '../data/content';
+import { contentOverviewData, bioParagraphs, technicalPillars } from '../data/content';
+import TechMarquee from '../components/TechMarquee';
+import Timeline from '../components/Timeline';
 import './About.css';
 
-const PILLARS = [
-  {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>
-      </svg>
-    ),
-    accent: 'var(--amber)',
-    title: 'Applied AI & Computer Vision',
-    tags: ['YOLO', 'PyTorch', 'OpenCV'],
-    body: 'Developing accurate object detection pipelines, image segmentation models, and real-time vision algorithms with deep learning frameworks.',
-  },
-  {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
-      </svg>
-    ),
-    accent: 'var(--teal)',
-    title: 'Backend Systems & APIs',
-    tags: ['FastAPI', 'Flask', 'Node.js', 'MongoDB'],
-    body: 'Architecting fast, modular REST APIs, scalable service endpoints, database schemas, and data ingestion services.',
-  },
-  {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
-      </svg>
-    ),
-    accent: 'var(--violet)',
-    title: 'Modern Web Engineering',
-    tags: ['React 19', 'Vite', 'Modern CSS', 'SPA'],
-    body: 'Building fluid, accessible, high-performance web applications with modular component architecture and responsive design systems.',
-  },
-  {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-      </svg>
-    ),
-    accent: 'var(--rose)',
-    title: 'Data Pipelines & Analytics',
-    tags: ['Pandas', 'Power BI', 'Tableau'],
-    body: 'Transforming raw unstructured data into actionable insights through robust preprocessing, feature engineering, and interactive dashboards.',
-  },
-];
+/* SVG icons for each pillar — keyed by iconPath from content.js */
+const PILLAR_ICONS = {
+  'applied-ai': (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>
+    </svg>
+  ),
+  backend: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+    </svg>
+  ),
+  web: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+    </svg>
+  ),
+  data: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+    </svg>
+  ),
+};
 
 export default function About() {
-  const content = contentOverviewData;
-  const stack = content?.stack || [];
-  const timeline = content?.timeline || [];
+  const content     = contentOverviewData;
+  const stack       = content?.stack || [];
+  const timeline    = content?.timeline || [];
   const internships = content?.internships || [];
+  const current     = content?.currentRole;
 
   const [previewCert, setPreviewCert] = useState(null);
+  const modalTitleId = 'about-modal-title';
 
   // Close modal on Escape
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setPreviewCert(null);
-    };
-    if (previewCert) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
+    if (!previewCert) return;
+    const handleKeyDown = (e) => { if (e.key === 'Escape') setPreviewCert(null); };
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
@@ -79,9 +57,9 @@ export default function About() {
       {/* ══ HERO ════════════════════════════════════════════ */}
       <section className="section about-hero">
         <div className="container">
-          <p className="sec-eyebrow fu">Profile & Experience</p>
+          <p className="sec-eyebrow fu">Profile &amp; Experience</p>
           <h1 className="sec-title fu d1">
-            Engineering <em>Trajectory</em> & Impact
+            Engineering <em>Trajectory</em> &amp; Impact
           </h1>
           <p className="sec-sub fu d2">
             Computer Science graduate combining applied machine learning research, computer vision pipelines,
@@ -102,22 +80,13 @@ export default function About() {
             </div>
 
             <h2 className="about-name">Shah Jahan Abdul Latif</h2>
-            <p className="about-role">Machine Learning Engineer • Computer Science Graduate</p>
+            <p className="about-role">Junior AI Engineer @ Reactive Space • Computer Science Graduate</p>
 
+            {/* Bio paragraphs from data layer */}
             <div className="about-body">
-              <p>
-                I am a Computer Science graduate from <strong>Sukkur IBA University</strong> with a deep passion for
-                applied artificial intelligence, computer vision, and high-performance software engineering.
-              </p>
-              <p>
-                My background spans <strong>three industry internships</strong> across Machine Learning Engineering at 
-                <strong> FlyRank Corp USA</strong>, AI/ML development at <strong>SafeX Solutions</strong>, and responsive web development 
-                at <strong>High Tech Software House</strong>.
-              </p>
-              <p>
-                I focus on translating complex machine learning models into practical, deployable tools—ranging from 
-                real-time object detection systems to full-stack web applications.
-              </p>
+              {bioParagraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
             </div>
 
             {/* Quick Metrics */}
@@ -131,8 +100,12 @@ export default function About() {
                 <span className="about-meta__val">3.27 / 4.00</span>
               </div>
               <div className="about-meta__row">
+                <span className="about-meta__key">Current Role</span>
+                <span className="about-meta__val">Junior AI Engineer, Reactive Space</span>
+              </div>
+              <div className="about-meta__row">
                 <span className="about-meta__key">Industry Internships</span>
-                <span className="about-meta__val" style={{ color: 'var(--amber)', fontWeight: 600 }}>3 Completed Roles</span>
+                <span className="about-meta__val" style={{ color: 'var(--accent)', fontWeight: 600 }}>3 Completed Roles</span>
               </div>
               <div className="about-meta__row">
                 <span className="about-meta__key">Projects Shipped</span>
@@ -145,7 +118,7 @@ export default function About() {
             </div>
 
             <div className="about-bio__actions">
-              <Link to="/portfolio" className="btn btn-amber">
+              <Link to="/portfolio" className="btn btn-primary">
                 Explore Projects →
               </Link>
               <Link to="/certifications" className="btn btn-outline">
@@ -154,14 +127,14 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: Technical Pillars */}
+          {/* Right: Technical Pillars from data layer */}
           <div className="about-philo">
             <h3 className="about-philo__heading">Technical Pillars</h3>
             <div className="about-philo__grid">
-              {PILLARS.map((p) => (
+              {technicalPillars.map((p) => (
                 <div key={p.title} className="philo-card card">
                   <div className="philo-card__head">
-                    <span className="philo-icon">{p.icon}</span>
+                    <span className="philo-icon">{PILLAR_ICONS[p.iconPath]}</span>
                     <h4 className="philo-title">{p.title}</h4>
                   </div>
                   <p className="philo-body">{p.body}</p>
@@ -185,16 +158,67 @@ export default function About() {
             <div>
               <p className="sec-eyebrow">Practical Track Record</p>
               <h2 className="sec-title">
-                Three Industry <em>Internships</em>
+                Industry <em>Experience</em>
               </h2>
               <p className="sec-sub">
-                Verified professional internships across applied Machine Learning, AI engineering, and modern web development.
+                A current speech AI engineering role, built on three verified internships across applied Machine Learning,
+                AI engineering, and modern web development.
               </p>
             </div>
             <Link to="/certifications" className="btn btn-outline hide-sm">
               View All Credentials ↗
             </Link>
           </div>
+
+          {/* Current full-time role */}
+          {current && (
+            <article className="intern-card intern-card--current card fu">
+              <div className="intern-card__stripe" style={{ background: current.color }} />
+              <div className="intern-card__body">
+                <div className="intern-card__top">
+                  <span className="current-pill">
+                    <span className="current-pill__dot" />
+                    Current Role
+                  </span>
+                  <span className="intern-card__period">{current.period}</span>
+                </div>
+
+                <h3 className="intern-card__role">{current.role}</h3>
+                <div className="intern-card__company-row">
+                  <span className="intern-card__company">{current.company}</span>
+                  <span className="intern-card__loc">• {current.location}</span>
+                  <span
+                    className="chip chip--sm"
+                    style={{ color: current.color, borderColor: `${current.color}40`, background: `${current.color}12` }}
+                  >
+                    {current.badge}
+                  </span>
+                </div>
+                <p className="current-role__summary">{current.summary}</p>
+
+                <div className="current-role__areas">
+                  {current.areas.map((a) => (
+                    <div key={a.title} className="current-role__area">
+                      <h4>{a.title}</h4>
+                      <p>{a.body}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <ul className="intern-card__bullets current-role__bullets">
+                  {current.bullets.map((b, i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+                </ul>
+
+                <div className="intern-card__skills">
+                  {current.skills.map((s) => (
+                    <span key={s} className="chip chip--sm">{s}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          )}
 
           <div className="internships-grid">
             {internships.map((item, idx) => (
@@ -232,6 +256,7 @@ export default function About() {
                       onClick={() => setPreviewCert(item)}
                       role="button"
                       tabIndex={0}
+                      onKeyDown={(e) => e.key === 'Enter' && setPreviewCert(item)}
                       aria-label={`Preview ${item.role} certificate`}
                     >
                       <img
@@ -285,64 +310,29 @@ export default function About() {
         </div>
       </section>
 
-      {/* ══ TECH MARQUEE ══════════════════════════════════════ */}
-      <div className="about-marquee">
-        <p className="sec-eyebrow" style={{ justifyContent: 'center', marginBottom: 16 }}>Core Technologies & Tooling</p>
-        <div className="about-marquee__track">
-          <div className="about-marquee__inner">
-            {[...stack, ...stack, ...stack].map((s, i) => (
-              <span key={i} className="marquee-item">{s.name}</span>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* ══ TECH MARQUEE — shared component ═══════════════════ */}
+      <TechMarquee stack={stack} label="Core Technologies & Tooling" />
 
-      {/* ══ TIMELINE ══════════════════════════════════════════ */}
+      {/* ══ TIMELINE — shared component ══════════════════════ */}
       <section className="section about-timeline">
         <div className="container">
-          <p className="sec-eyebrow">Academic & Career Growth</p>
+          <p className="sec-eyebrow">Academic &amp; Career Growth</p>
           <h2 className="sec-title">Career <em>Timeline</em></h2>
           <p className="sec-sub" style={{ marginBottom: 60 }}>
             Chronological milestones spanning university studies, technical skill building, and industry internships.
           </p>
-
-          <div className="timeline">
-            <div className="timeline__spine" />
-            {timeline.map((item, i) => (
-              <div
-                key={i}
-                className={`tl-item${i % 2 === 0 ? ' tl-item--left' : ' tl-item--right'}`}
-              >
-                <div
-                  className="tl-dot"
-                  style={{ background: item.color, boxShadow: `0 0 14px ${item.color}55` }}
-                />
-                <div className="tl-card card">
-                  <div className="tl-card__top">
-                    <span className="tl-year" style={{ color: item.color }}>{item.year}</span>
-                    <span
-                      className="chip"
-                      style={{ color: item.color, borderColor: `${item.color}40`, background: `${item.color}14` }}
-                    >
-                      {item.tag}
-                    </span>
-                  </div>
-                  <h4 className="tl-title">{item.title}</h4>
-                  <p className="tl-body">{item.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Timeline items={timeline} variant="zigzag" />
         </div>
       </section>
 
-      {/* ══ CERTIFICATE LIGHTBOX MODAL ═════════════════════════ */}
+      {/* ══ CERTIFICATE LIGHTBOX MODAL ══════════════════════════ */}
       {previewCert && (
         <div
           className="about-modal"
           onClick={() => setPreviewCert(null)}
           role="dialog"
           aria-modal="true"
+          aria-labelledby={modalTitleId}
         >
           <div className="about-modal__content" onClick={(e) => e.stopPropagation()}>
             <button
@@ -368,7 +358,7 @@ export default function About() {
                 >
                   {previewCert.badge || previewCert.tag || 'Internship'}
                 </span>
-                <h3 className="about-modal__title">{previewCert.role || previewCert.title}</h3>
+                <h3 id={modalTitleId} className="about-modal__title">{previewCert.role || previewCert.title}</h3>
                 <p className="about-modal__sub">{previewCert.company || previewCert.issuer} • {previewCert.period || previewCert.year}</p>
               </div>
 

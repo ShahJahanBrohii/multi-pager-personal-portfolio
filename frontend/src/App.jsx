@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar  from './components/Navbar';
 import BackToTop from './components/BackToTop';
@@ -37,9 +37,9 @@ export default function App() {
             alignItems:'center', justifyContent:'center',
             gap:'18px', paddingTop:'var(--nav-h)'
           }}>
-            <p style={{ fontFamily:'var(--font-head)', fontSize:'80px', color:'var(--amber)', lineHeight:1 }}>404</p>
+            <p style={{ fontFamily:'var(--font-head)', fontSize:'80px', color:'var(--accent)', lineHeight:1 }}>404</p>
             <p style={{ color:'var(--text2)' }}>Page not found.</p>
-            <a href="/" className="btn btn-outline">← Back Home</a>
+            <Link to="/" className="btn btn-outline">← Back Home</Link>
           </div>
         } />
       </Routes>

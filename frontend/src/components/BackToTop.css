@@ -6,8 +6,8 @@
   width: 44px;
   height: 44px;
   border-radius: 8px;
-  background: var(--amber);
-  color: #FFFFFF;
+  background: var(--accent);
+  color: var(--ink2);
   border: none;
   display: flex;
   align-items: center;
@@ -20,7 +20,7 @@
 }
 
 .back-to-top:hover {
-  background: var(--amber2);
+  background: var(--accent2);
   box-shadow: 0 6px 18px rgba(0,0,0,0.16);
   transform: translateY(-2px);
 }

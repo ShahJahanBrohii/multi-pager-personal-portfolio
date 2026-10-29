@@ -1,19 +1,16 @@
 import './ProjectCard.css';
 
-const DIFFICULTY_COLORS = {
-  Easy: '#4DD9C0',
-  Medium: '#F5A623',
-  Hard: '#F56E6E',
-};
+const DIFFICULTY_LEVELS = { Easy: 1, Medium: 2, Hard: 3 };
 
+/* AI-side domains use the cyan accent; software domains use violet */
 const TAG_ACCENTS = {
-  AI: 'var(--amber)',
-  CV: 'var(--rose)',
-  ML: 'var(--amber)',
-  Web: 'var(--teal)',
+  AI: 'var(--accent)',
+  ML: 'var(--accent)',
+  CV: 'var(--accent)',
+  Data: 'var(--accent)',
+  Web: 'var(--violet)',
+  Java: 'var(--violet)',
   Python: 'var(--violet)',
-  Java: 'var(--teal)',
-  Data: 'var(--rose)',
 };
 
 function getImageSrc(project) {
@@ -24,12 +21,16 @@ function getImageSrc(project) {
 }
 
 export default function ProjectCard({ project, featured = false }) {
-  const { title, desc, tag, tech, github, archLink, accent, difficulty } = project;
+  const { title, desc, tag, tech, github, archLink, difficulty } = project;
   const imageSrc = getImageSrc(project);
-  const cardAccent = accent || TAG_ACCENTS[tag] || 'var(--amber)';
+  const cardAccent = TAG_ACCENTS[tag] || 'var(--accent)';
+  const level = DIFFICULTY_LEVELS[difficulty];
 
   return (
-    <article className={`pcard card${featured ? ' pcard--featured' : ''}`}>
+    <article
+      className={`pcard card${featured ? ' pcard--featured' : ''}`}
+      style={{ '--card-accent': cardAccent }}
+    >
       {/* coloured top stripe */}
       <div className="pcard__stripe" style={{ background: cardAccent }} />
 
@@ -54,19 +55,17 @@ export default function ProjectCard({ project, featured = false }) {
           <div className="pcard__tags">
             <span
               className="pcard__tag"
-              style={{ color: cardAccent, borderColor: `${cardAccent}40`, background: `${cardAccent}12` }}
+              style={{ color: cardAccent, borderColor: `color-mix(in srgb, ${cardAccent} 25%, transparent)`, background: `color-mix(in srgb, ${cardAccent} 7%, transparent)` }}
             >
               {tag}
             </span>
-            {difficulty && (
-              <span
-                className="pcard__difficulty"
-                style={{
-                  color: DIFFICULTY_COLORS[difficulty],
-                  borderColor: `${DIFFICULTY_COLORS[difficulty]}40`,
-                  background: `${DIFFICULTY_COLORS[difficulty]}12`,
-                }}
-              >
+            {level && (
+              <span className="pcard__level" title={`Difficulty: ${difficulty}`}>
+                <span className="pcard__bars" aria-hidden="true">
+                  {[1, 2, 3].map((n) => (
+                    <i key={n} className={n <= level ? 'on' : ''} />
+                  ))}
+                </span>
                 {difficulty}
               </span>
             )}

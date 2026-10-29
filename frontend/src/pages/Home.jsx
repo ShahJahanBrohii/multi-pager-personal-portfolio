@@ -1,51 +1,68 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
+import TechMarquee from '../components/TechMarquee';
+import HeroConsole from '../components/HeroConsole';
 import { projectsData } from '../data/projects';
 import { contentOverviewData } from '../data/content';
 import './Home.css';
 
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
 
-/* ── Typewriter hook ── */
+/* ── Typewriter hook — fixed deps array so effect re-runs only when words change ── */
 function useTypewriter(words, speed = 78, pause = 2100) {
-  const [text,    setText]    = useState('');
-  const [wIdx,    setWIdx]    = useState(0);
-  const [cIdx,    setCIdx]    = useState(0);
-  const [del,     setDel]     = useState(false);
-  useEffect(() => {
+  const [text,  setText]  = useState('');
+  const [wIdx,  setWIdx]  = useState(0);
+  const [cIdx,  setCIdx]  = useState(0);
+  const [del,   setDel]   = useState(false);
+
+  const tick = useCallback(() => {
     if (!words.length) return;
     const cur = words[wIdx];
-    const ms  = del ? speed * 0.5 : speed;
-    const id  = setTimeout(() => {
-      if (!del) {
-        setText(cur.slice(0, cIdx + 1));
-        if (cIdx + 1 === cur.length) setTimeout(() => setDel(true), pause);
-        else setCIdx(c => c + 1);
+    if (!del) {
+      const next = cur.slice(0, cIdx + 1);
+      setText(next);
+      if (cIdx + 1 === cur.length) {
+        setTimeout(() => setDel(true), pause);
       } else {
-        setText(cur.slice(0, cIdx - 1));
-        if (cIdx - 1 === 0) { setDel(false); setWIdx(i => (i+1) % words.length); setCIdx(0); }
-        else setCIdx(c => c - 1);
+        setCIdx((c) => c + 1);
       }
-    }, ms);
+    } else {
+      const next = cur.slice(0, cIdx - 1);
+      setText(next);
+      if (cIdx - 1 === 0) {
+        setDel(false);
+        setWIdx((i) => (i + 1) % words.length);
+        setCIdx(0);
+      } else {
+        setCIdx((c) => c - 1);
+      }
+    }
+  }, [words, wIdx, cIdx, del, pause]);
+
+  useEffect(() => {
+    const ms = del ? speed * 0.5 : speed;
+    const id = setTimeout(tick, ms);
     return () => clearTimeout(id);
-  });
+  }, [tick, speed, del]);
+
   return text;
 }
 
 export default function Home() {
-  const [projects] = useState(projectsData);
-  const [content] = useState(contentOverviewData);
+  // Static data — no useState needed, these never change
+  const projects = projectsData;
+  const content  = contentOverviewData;
+
   const words = content?.heroRoles?.length ? content.heroRoles : ['Backend Developer', 'ML Enthusiast'];
   const typed = useTypewriter(words);
-  const top3 = projects.slice(0, 3);
+  const top3  = projects.slice(0, 3);
   const stats = [
-    { v: String(content?.stats?.projects || 0), l: 'Projects' },
+    { v: String(content?.stats?.projects     || 0), l: 'Projects'     },
     { v: String(content?.stats?.certificates || 0), l: 'Certificates' },
-    { v: String(content?.stats?.tags || 0), l: 'Domains' },
+    { v: String(content?.stats?.tags         || 0), l: 'Domains'      },
     { v: String(content?.stats?.technologies || 0), l: 'Technologies' },
   ];
-  const stack = content?.stack || [];
 
   return (
     <div className="page">
@@ -56,11 +73,14 @@ export default function Home() {
         <div className="hero__blob hero__blob--a" />
         <div className="hero__blob hero__blob--b" />
 
-        <div className="container hero__inner">
+        <div className="hero__grid-bg" aria-hidden="true" />
+
+        <div className="container hero__layout">
+        <div className="hero__inner">
           {/* status pill */}
           <div className="hero__pill fu d1">
             <span className="hero__pill-dot" />
-            Available for internship / collaboration
+            Junior AI Engineer @ Reactive Space
           </div>
 
           {/* name */}
@@ -77,14 +97,14 @@ export default function Home() {
 
           {/* bio */}
           <p className="hero__bio fu d4">
-            Computer Science student and ML Engineer focused on computer vision, deep learning,
-            and building high-performance web applications. Featuring <strong>{content?.stats?.projects || 0} projects</strong>
-            and <strong>{content?.stats?.certificates || 0} certifications</strong>.
+            Computer Science graduate and Junior AI Engineer building real-time speech AI: speech recognition,
+            voice activity detection, and text-to-speech, alongside computer vision and deep learning work. Featuring <strong>{content?.stats?.projects || 0} projects</strong>
+            {' '}and <strong>{content?.stats?.certificates || 0} certifications</strong>.
           </p>
 
           {/* cta row */}
           <div className="hero__cta fu d5">
-            <Link to="/portfolio" className="btn btn-amber">
+            <Link to="/portfolio" className="btn btn-primary">
               View Projects
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
@@ -108,6 +128,11 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="hero__visual fu d4">
+          <HeroConsole />
+        </div>
+        </div>
+
         {/* scroll hint */}
         <div className="hero__scroll" aria-hidden="true">
           <div className="hero__scroll-bar" />
@@ -116,14 +141,7 @@ export default function Home() {
       </section>
 
       {/* ══ TECH MARQUEE ══════════════════════════════════════ */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...stack, ...stack].map((s, i) => (
-            <span key={i} className="marquee-item">{s.name}</span>
-          ))}
-          {stack.length === 0 && <span className="marquee-item">No technologies available yet</span>}
-        </div>
-      </div>
+      <TechMarquee stack={content?.stack || []} />
 
       {/* ══ FEATURED PROJECTS ════════════════════════════════════ */}
       <section className="section home-projects">
@@ -142,7 +160,7 @@ export default function Home() {
 
           <div className="home-projects__grid">
             {top3.map(p => (
-              <ProjectCard key={p._id || p.id} project={p} featured />
+              <ProjectCard key={p.id} project={p} featured />
             ))}
           </div>
 

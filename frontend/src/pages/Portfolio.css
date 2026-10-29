@@ -35,9 +35,9 @@
 }
 .port-filter__btn:hover { color: var(--text); border-color: var(--wire2); background: var(--ink3); }
 .port-filter__btn.active {
-  background: var(--amber-dim) !important;
-  border-color: var(--amber) !important;
-  color: var(--amber) !important;
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 .port-showing { font-size: 13px; color: var(--text2); }
 .port-showing strong { color: var(--text); }
@@ -49,9 +49,25 @@
   gap: 18px;
 }
 
+/* ── Filter animation ────────────────────────────────── */
+.port-card-wrap {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.port-grid--visible .port-card-wrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+.port-grid--hidden .port-card-wrap {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
 @media (max-width: 900px) { .port-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) {
   .port-grid { grid-template-columns: 1fr; }
   .port-filter__btns { width: 100%; }
   .port-filter__btn { flex: 1 1 48%; text-align: center; }
-}
+}

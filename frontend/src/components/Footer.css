@@ -31,7 +31,7 @@
 
 .footer__tagline {
   font-size: 13px;
-  color: var(--amber);
+  color: var(--accent);
 }
 
 .footer__copy {
@@ -73,7 +73,7 @@
 }
 
 .footer__link:hover {
-  color: var(--amber);
+  color: var(--accent);
 }
 
 .footer__socials {
@@ -95,9 +95,9 @@
 }
 
 .footer__soc:hover {
-  color: var(--amber);
+  color: var(--accent);
   border-color: var(--wire2);
-  background: var(--amber-glow);
+  background: var(--accent-glow);
 }
 
 @media (max-width: 1024px) {

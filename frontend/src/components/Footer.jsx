@@ -22,9 +22,9 @@ export default function Footer() {
 
         <div className="footer__section footer__brand">
           <p className="footer__logo">
-            <span style={{ color: 'var(--amber)' }}>[</span>
+            <span style={{ color: 'var(--accent)' }}>[</span>
             Shah.Jahan
-            <span style={{ color: 'var(--amber)' }}>]</span>
+            <span style={{ color: 'var(--accent)' }}>]</span>
           </p>
           <p className="footer__tagline">Backend Developer & ML Enthusiast</p>
           <p className="footer__copy">© {currentYear} Shah Jahan Brohii. All rights reserved.</p>

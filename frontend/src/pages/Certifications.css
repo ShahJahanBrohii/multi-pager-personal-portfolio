@@ -29,16 +29,16 @@
 }
 
 .cert-filter__btn:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  background: var(--amber-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
 }
 
 .cert-filter__btn.active {
-  background: var(--amber);
+  background: var(--accent);
   color: #0b0f17;
   font-weight: 600;
-  border-color: var(--amber);
+  border-color: var(--accent);
 }
 
 .cert-showing {
@@ -154,7 +154,7 @@
 
 .cert-card__issuer {
   font-size: 13px;
-  color: var(--amber);
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -195,9 +195,9 @@
 }
 
 .cert-card__view-btn:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  background: var(--amber-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
 }
 
 .certs-cta {
@@ -255,9 +255,9 @@
 }
 
 .cert-modal__close:hover {
-  background: var(--amber);
+  background: var(--accent);
   color: #0b0f17;
-  border-color: var(--amber);
+  border-color: var(--accent);
 }
 
 .cert-modal__img-wrap {
@@ -315,7 +315,7 @@
   padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid var(--wire);
-  color: var(--amber);
+  color: var(--accent);
   font-size: 12px;
 }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { contentOverviewData } from '../data/content';
+import Timeline from '../components/Timeline';
 import './Resume.css';
 
 const RESUME_URL = import.meta.env.VITE_RESUME_URL || '';
@@ -30,10 +31,11 @@ const TABS = ['Skills', 'Experience', 'Education', 'Timeline'];
 
 export default function Resume() {
   const [tab, setTab] = useState('Skills');
-  const content = contentOverviewData;
 
-  const skills = content.skills || {};
-  const resume = content.resume || { experience: [], education: [] };
+  // Static data — no useState needed, these never change
+  const content  = contentOverviewData;
+  const skills   = content.skills || {};
+  const resume   = content.resume || { experience: [], education: [] };
   const timeline = content.timeline || [];
 
   return (
@@ -51,7 +53,7 @@ export default function Resume() {
             <a
               href={RESUME_URL}
               download
-              className="btn btn-amber fu d3"
+              className="btn btn-primary fu d3"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -67,10 +69,14 @@ export default function Resume() {
         <div className="container">
 
           {/* tab bar */}
-          <div className="res-tabs">
+          <div className="res-tabs" role="tablist" aria-label="Resume sections">
             {TABS.map(t => (
               <button
                 key={t}
+                role="tab"
+                id={`tab-${t.toLowerCase()}`}
+                aria-selected={tab === t}
+                aria-controls={`panel-${t.toLowerCase()}`}
                 className={`res-tab${tab === t ? ' active' : ''}`}
                 onClick={() => setTab(t)}
               >
@@ -81,7 +87,12 @@ export default function Resume() {
 
           {/* ─ Skills panel ─ */}
           {tab === 'Skills' && (
-            <div className="res-panel fi">
+            <div
+              role="tabpanel"
+              id="panel-skills"
+              aria-labelledby="tab-skills"
+              className="res-panel fi"
+            >
               {Object.entries(skills).map(([cat, items]) => (
                 <div key={cat} className="skills-group">
                   <h3 className="skills-group__hd">{cat}</h3>
@@ -98,7 +109,12 @@ export default function Resume() {
 
           {/* ─ Experience panel ─ */}
           {tab === 'Experience' && (
-            <div className="res-panel fi">
+            <div
+              role="tabpanel"
+              id="panel-experience"
+              aria-labelledby="tab-experience"
+              className="res-panel fi"
+            >
               {resume.experience.map((ex, i) => (
                 <div key={i} className="res-entry card">
                   <div className="res-entry__hd">
@@ -121,7 +137,12 @@ export default function Resume() {
 
           {/* ─ Education panel ─ */}
           {tab === 'Education' && (
-            <div className="res-panel fi">
+            <div
+              role="tabpanel"
+              id="panel-education"
+              aria-labelledby="tab-education"
+              className="res-panel fi"
+            >
               {resume.education.map((ed, i) => (
                 <div key={i} className="res-entry card">
                   <div className="res-entry__hd">
@@ -133,7 +154,7 @@ export default function Resume() {
                   </div>
                   <div className="res-entry__gpa">
                     <span>CGPA</span>
-                    <strong style={{ color: 'var(--amber)' }}>{ed.gpa}</strong>
+                    <strong style={{ color: 'var(--accent)' }}>{ed.gpa}</strong>
                   </div>
                   <ul className="res-entry__bullets">
                     {ed.notes.map((n, j) => (
@@ -146,25 +167,18 @@ export default function Resume() {
             </div>
           )}
 
-          {/* ─ Timeline panel ─ */}
+          {/* ─ Timeline panel — shared component ─ */}
           {tab === 'Timeline' && (
-            <div className="res-panel fi">
-              <div className="timeline">
-                {timeline.map((item, i) => (
-                  <div key={i} className="timeline__item">
-                    <div className="timeline__marker" style={{ backgroundColor: item.color }} />
-                    <div className="timeline__content card">
-                      <div className="timeline__header">
-                        <span className="timeline__year" style={{ color: item.color }}>{item.year}</span>
-                        <span className="timeline__tag" style={{ borderColor: item.color, color: item.color }}>{item.tag}</span>
-                      </div>
-                      <h3 className="timeline__title">{item.title}</h3>
-                      <p className="timeline__body">{item.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {timeline.length === 0 && <p style={{ color: 'var(--text2)' }}>No timeline data available yet.</p>}
+            <div
+              role="tabpanel"
+              id="panel-timeline"
+              aria-labelledby="tab-timeline"
+              className="res-panel fi"
+            >
+              {timeline.length > 0
+                ? <Timeline items={timeline} variant="linear" />
+                : <p style={{ color: 'var(--text2)' }}>No timeline data available yet.</p>
+              }
             </div>
           )}
 

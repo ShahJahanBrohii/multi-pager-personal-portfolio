@@ -4,16 +4,30 @@ import { projectsData } from '../data/projects';
 import './Portfolio.css';
 
 const TAG_COLORS = {
-  ML: 'var(--rose)',
-  Backend: 'var(--teal)',
+  AI: 'var(--accent)',
+  ML: 'var(--accent)',
+  CV: 'var(--accent)',
+  Data: 'var(--accent)',
 };
 
 export default function Portfolio() {
-  const [projects] = useState(projectsData);
+  // Static data — no useState needed
+  const projects = projectsData;
   const [cat, setCat] = useState('All');
+  const [visible, setVisible] = useState(true);
 
   const CATS_DYNAMIC = ['All', ...new Set(projects.map((p) => p.tag))];
   const filtered = cat === 'All' ? projects : projects.filter(p => p.tag === cat);
+
+  // When category changes: fade out → swap items → fade in
+  const handleCatChange = (newCat) => {
+    if (newCat === cat) return;
+    setVisible(false);
+    setTimeout(() => {
+      setCat(newCat);
+      setVisible(true);
+    }, 180); // must match CSS transition duration
+  };
 
   return (
     <div className="page">
@@ -30,7 +44,7 @@ export default function Portfolio() {
           {/* count pills */}
           <div className="port-counts fu d3">
             {[
-              { label: 'Total', n: projects.length, c: 'var(--amber)' },
+              { label: 'Total', n: projects.length, c: 'var(--accent)' },
               ...CATS_DYNAMIC.filter((c) => c !== 'All').map((label) => ({
                 label,
                 n: projects.filter((p) => p.tag === label).length,
@@ -52,12 +66,13 @@ export default function Portfolio() {
 
           {/* filter bar */}
           <div className="port-filter">
-            <div className="port-filter__btns">
+            <div className="port-filter__btns" role="group" aria-label="Filter projects by category">
               {CATS_DYNAMIC.map(c => (
                 <button
                   key={c}
                   className={`port-filter__btn${cat === c ? ' active' : ''}`}
-                  onClick={() => setCat(c)}
+                  onClick={() => handleCatChange(c)}
+                  aria-pressed={cat === c}
                 >
                   {c}
                 </button>
@@ -68,13 +83,13 @@ export default function Portfolio() {
             </span>
           </div>
 
-          {/* project grid */}
-          <div className="port-grid">
+          {/* project grid — animated on category switch */}
+          <div className={`port-grid${visible ? ' port-grid--visible' : ' port-grid--hidden'}`}>
             {filtered.map((p, i) => (
               <div
-                key={p._id || p.id}
-                className="fu"
-                style={{ animationDelay: `${i * 0.06}s` }}
+                key={p.id}
+                className="port-card-wrap"
+                style={{ transitionDelay: visible ? `${i * 0.04}s` : '0s' }}
               >
                 <ProjectCard project={p} />
               </div>

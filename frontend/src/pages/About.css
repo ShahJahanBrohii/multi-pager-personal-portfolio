@@ -18,10 +18,10 @@
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  border: 1.5px solid var(--amber);
+  border: 1.5px solid var(--accent);
   opacity: 0.45;
   animation: spinSlow 14s linear infinite;
-  background: conic-gradient(var(--amber) 90deg, transparent 90deg);
+  background: conic-gradient(var(--accent) 90deg, transparent 90deg);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
 }
 .about-avatar__inner {
@@ -32,7 +32,7 @@
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-head);
   font-size: 22px; font-weight: 700;
-  color: var(--amber);
+  color: var(--accent);
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -45,7 +45,7 @@
 }
 .about-role {
   font-size: 13px;
-  color: var(--amber);
+  color: var(--accent);
   letter-spacing: 0.02em;
   margin-bottom: 22px;
   font-family: var(--font-mono);
@@ -168,7 +168,7 @@
 
 /* ── INTERNSHIPS SHOWCASE ───────────────────────────────── */
 .about-internships {
-  background: linear-gradient(180deg, transparent, rgba(245, 166, 35, 0.03), transparent);
+  background: linear-gradient(180deg, transparent, var(--accent-glow), transparent);
   border-top: 1px solid var(--wire);
   border-bottom: 1px solid var(--wire);
 }
@@ -179,6 +179,79 @@
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 40px;
+}
+
+/* ── Current role (full-width featured card) ── */
+.intern-card--current {
+  margin-bottom: 24px;
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow: 0 0 40px -20px var(--accent);
+}
+
+.current-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.current-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5);
+  animation: current-pulse 2s infinite;
+}
+
+@keyframes current-pulse {
+  70%  { box-shadow: 0 0 0 8px rgba(34, 211, 238, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+}
+
+.intern-card--current .intern-card__company-row {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.current-role__summary {
+  margin: 14px 0 20px;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 900px;
+}
+
+.current-role__areas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.current-role__area {
+  padding: 14px;
+  border: 1px solid var(--wire2);
+  border-radius: 8px;
+}
+
+.current-role__area h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--accent);
+}
+
+.current-role__area p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text2);
+}
+
+.current-role__bullets {
+  margin-bottom: 20px;
 }
 
 .internships-grid {
@@ -245,7 +318,7 @@
 }
 
 .intern-card__company {
-  color: var(--amber);
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -318,7 +391,7 @@
   content: '▸';
   position: absolute;
   left: 0;
-  color: var(--amber);
+  color: var(--accent);
   font-weight: bold;
 }
 
@@ -372,97 +445,14 @@
 }
 
 .btn-cert-preview:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  background: var(--amber-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
 }
 
-/* ── MARQUEE ────────────────────────────────────────────── */
-.about-marquee {
-  border-top: 1px solid var(--wire);
-  border-bottom: 1px solid var(--wire);
-  background: var(--ink2);
-  padding: 26px 0;
-  overflow: hidden;
-}
-.about-marquee__track {
-  overflow: hidden;
-  position: relative;
-}
-.about-marquee__track::before,
-.about-marquee__track::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-}
-.about-marquee__track::before { left: 0; background: linear-gradient(to right, var(--ink2), transparent); }
-.about-marquee__track::after  { right: 0; background: linear-gradient(to left, var(--ink2), transparent); }
-.about-marquee__inner {
-  display: flex;
-  width: max-content;
-  animation: marqLeft 36s linear infinite;
-  gap: 18px;
-}
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text2);
-  padding: 6px 16px;
-  background: var(--ink3);
-  border: 1px solid var(--wire);
-  border-radius: 20px;
-}
+/* Marquee styles → TechMarquee.css */
 
-/* ── TIMELINE ───────────────────────────────────────────── */
-.timeline { position: relative; padding-bottom: 10px; }
-.timeline__spine {
-  position: absolute;
-  left: 50%;
-  top: 0; bottom: 0;
-  width: 1px;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, var(--amber), var(--teal), transparent);
-  opacity: 0.25;
-}
-
-.tl-item {
-  display: flex;
-  width: 50%;
-  margin-bottom: 36px;
-  position: relative;
-}
-.tl-item--left  { padding-right: 46px; justify-content: flex-end; }
-.tl-item--right { padding-left: 46px; margin-left: 50%; justify-content: flex-start; }
-
-.tl-dot {
-  position: absolute;
-  width: 13px; height: 13px;
-  border-radius: 50%;
-  top: 18px;
-  z-index: 1;
-}
-.tl-item--left  .tl-dot { right: -7px; }
-.tl-item--right .tl-dot { left: -7px; }
-
-.tl-card { padding: 18px 20px; max-width: 380px; width: 100%; border-radius: 8px; }
-.tl-card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-.tl-year {
-  font-family: var(--font-head);
-  font-size: 18px; font-weight: 700;
-  line-height: 1;
-}
-.tl-title { font-size: 14.5px; color: var(--text); margin-bottom: 6px; font-weight: 600; }
-.tl-body  { font-size: 13px; color: var(--text2); line-height: 1.7; }
+/* Timeline styles → Timeline.css */
 
 /* ── LIGHTBOX MODAL ─────────────────────────────────────── */
 .about-modal {
@@ -512,9 +502,9 @@
 }
 
 .about-modal__close:hover {
-  background: var(--amber);
+  background: var(--accent);
   color: #0b0f17;
-  border-color: var(--amber);
+  border-color: var(--accent);
 }
 
 .about-modal__img-wrap {
@@ -572,7 +562,7 @@
   padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid var(--wire);
-  color: var(--amber);
+  color: var(--accent);
   font-size: 12px;
 }
 
@@ -580,14 +570,13 @@
 @media (max-width: 980px) {
   .about-main__grid { grid-template-columns: 1fr; gap: 40px; }
   .internships-grid { grid-template-columns: 1fr 1fr; }
+  .current-role__areas { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 680px) {
   .internships-grid { grid-template-columns: 1fr; }
+  .current-role__areas { grid-template-columns: 1fr; }
   .about-internships__header { flex-direction: column; align-items: flex-start; }
-  .timeline__spine { left: 16px; }
-  .tl-item { width: 100%; margin-left: 0 !important; padding: 0 0 0 40px !important; justify-content: flex-start !important; }
-  .tl-dot  { left: 9px !important; right: auto !important; }
   .about-modal__info { flex-direction: column; align-items: flex-start; }
   .about-modal__id { align-items: flex-start; }
 }
