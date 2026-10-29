@@ -1,0 +1,56 @@
+/* ══ TECH MARQUEE (shared) ═══════════════════════════════════ */
+.tech-marquee__label {
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.tech-marquee__wrap {
+  border-top: 1px solid var(--wire);
+  border-bottom: 1px solid var(--wire);
+  background: var(--ink2);
+  padding: 14px 0;
+  overflow: hidden;
+  position: relative;
+}
+.tech-marquee__wrap::before,
+.tech-marquee__wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+.tech-marquee__wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--ink2), transparent);
+}
+.tech-marquee__wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--ink2), transparent);
+}
+
+.tech-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marqLeft 34s linear infinite;
+}
+
+/* marquee-item is a shared utility used by both marquees */
+.marquee-item {
+  padding: 5px 20px;
+  margin: 0 5px;
+  border: 1px solid var(--wire);
+  border-radius: 6px;
+  background: var(--ink3);
+  font-size: 12px;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .tech-marquee__wrap::before,
+  .tech-marquee__wrap::after {
+    width: 54px;
+  }
+}
